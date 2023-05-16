@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Block
+  - Killer
+  - Platform
+  - Blood
+  - Bullet
+  - Water
+  - Water2
+  - Water3
+  - WalljumpR
+  - WalljumpL
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Block
+    uniqueID: 829553203
+    locked: 0
+  - name: Vine
+    uniqueID: 2966261971
+    locked: 0
+  - name: Killer
+    uniqueID: 2259209365
+    locked: 0
+  - name: Platform
+    uniqueID: 2825367461
+    locked: 0
+  - name: Player
+    uniqueID: 2991620141
+    locked: 0
+  - name: Water
+    uniqueID: 3259149347
+    locked: 0
