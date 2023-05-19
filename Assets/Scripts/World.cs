@@ -1,45 +1,43 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 // World singleton helps us manage the game
 public class World : Singleton<World>
 {
-    string roomCaption = "I Wanna Be The Unity Engine Cube Edition";
-    WindowCaption windowCaption = new WindowCaption();
 
-    public int savenum = 1;
-    public Difficulty difficulty = Difficulty.Medium;
-    public enum Difficulty
-    {
-        Medium = 0,
-        Hard = 1,
-        VeryHard = 2,
-        Impossible = 3,
-    }
-    public int death = 0;
-    public int time = 0;
-    public int grav = 1;
+    [SerializeField] private string roomCaption = "I Wanna Be The Unity Engine";
 
-    public bool gameStarted = false;
-    public bool autosave = false;
+    private WindowCaption windowCaption = new();
+
     public string startScene = "Stage01";
 
-    public string saveScene;
-    public float savePlayerX;
-    public float savePlayerY;
-    public int saveGrav;
+    [ReadOnly] public int savenum = 1;
+
+    [ReadOnly] public Difficulty difficulty = Difficulty.Medium;
+
+    [ReadOnly] public int death = 0;
+    [ReadOnly] public int time = 0;
+    [ReadOnly] public int grav = 1;
+
+    [ReadOnly] public bool gameStarted = false;
+    [ReadOnly] public bool autosave = false;
+
+    [ReadOnly] public string saveScene;
+    [ReadOnly] public float savePlayerX;
+    [ReadOnly] public float savePlayerY;
+    [ReadOnly] public int saveGrav;
 
     public Player playerPrefab;
     public AudioSource deathSound;
 
     // May move these to separate class
-    public Dictionary<Texture2D, MaskData> maskDataManager = new Dictionary<Texture2D, MaskData>();
-    public Dictionary<string, List<PixelPerfectCollider>> colliders = new Dictionary<string, List<PixelPerfectCollider>>();
+    public Dictionary<Texture2D, MaskData> maskDataManager = new();
+    public Dictionary<string, List<PixelPerfectCollider>> colliders = new();
 
     void Start()
     {
@@ -87,10 +85,10 @@ public class World : Singleton<World>
         autosave = false;
         grav = saveGrav;
 
-        foreach (var p in GameObject.FindObjectsOfType<Player>())
-            GameObject.Destroy(p.gameObject);
+        foreach (var p in FindObjectsOfType<Player>())
+            Destroy(p.gameObject);
 
-        var player = GameObject.Instantiate<Player>(playerPrefab);
+        var player = Instantiate(playerPrefab);
         player.gameObject.transform.position = new Vector3(savePlayerX, savePlayerY);
 
         SceneManager.LoadScene(saveScene);
@@ -100,7 +98,7 @@ public class World : Singleton<World>
     {
         if (savePosition)
         {
-            var player = GameObject.FindObjectOfType<Player>();
+            var player = FindObjectOfType<Player>();
             if (player != null)
             {
                 saveScene = SceneManager.GetActiveScene().name;
@@ -131,6 +129,14 @@ public class World : Singleton<World>
     {
         deathSound.Play();
         death++;
+    }
+
+    public enum Difficulty
+    {
+        Medium = 0,
+        Hard = 1,
+        VeryHard = 2,
+        Impossible = 3,
     }
 }
 
