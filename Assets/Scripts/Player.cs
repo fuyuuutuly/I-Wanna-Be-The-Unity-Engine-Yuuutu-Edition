@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         {
             GameObject.Instantiate(world);
             World.instance.gameStarted = true;
-            World.instance.saveScene = SceneManager.GetActiveScene().name;
+            World.instance.savedScene = SceneManager.GetActiveScene().name;
             World.instance.autosave = true;
         }
     }

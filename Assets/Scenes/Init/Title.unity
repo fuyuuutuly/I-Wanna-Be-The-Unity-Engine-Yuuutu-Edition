@@ -177,7 +177,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 300
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -203,7 +203,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AssetsPPU: 1
   m_RefResolutionX: 800
-  m_RefResolutionY: 608
+  m_RefResolutionY: 600
   m_UpscaleRT: 0
   m_PixelSnapping: 0
   m_CropFrameX: 0
@@ -266,7 +266,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 651601882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 260.17065, y: -39.670044, z: -612.8774}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -323,6 +323,10 @@ PrefabInstance:
     - target: {fileID: 2047984818810756086, guid: 2a2d45928414c1e429b2adf664983a4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2047984818810756086, guid: 2a2d45928414c1e429b2adf664983a4c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2677951181176309097, guid: 2a2d45928414c1e429b2adf664983a4c, type: 3}
       propertyPath: m_Name

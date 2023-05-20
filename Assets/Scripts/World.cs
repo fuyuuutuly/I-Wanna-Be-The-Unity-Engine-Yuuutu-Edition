@@ -12,9 +12,9 @@ public class World : Singleton<World>
 
     [SerializeField] private string roomCaption = "I Wanna Be The Unity Engine";
 
-    private WindowCaption windowCaption = new();
+    [NonSerialized] private WindowCaption windowCaption = new();
 
-    public string startScene = "Stage01";
+    [SerializeField] public string startScene = "Stage01";
 
     [ReadOnly] public int savenum = 1;
 
@@ -27,13 +27,13 @@ public class World : Singleton<World>
     [ReadOnly] public bool gameStarted = false;
     [ReadOnly] public bool autosave = false;
 
-    [ReadOnly] public string saveScene;
-    [ReadOnly] public float savePlayerX;
-    [ReadOnly] public float savePlayerY;
-    [ReadOnly] public int saveGrav;
+    [ReadOnly] public string savedScene;
+    [ReadOnly] public float savedPlayerX;
+    [ReadOnly] public float savedPlayerY;
+    [ReadOnly] public int savedGrav;
 
-    public Player playerPrefab;
-    public AudioSource deathSound;
+    [SerializeField] public Player playerPrefab;
+    [SerializeField] public AudioSource deathSound;
 
     // May move these to separate class
     public Dictionary<Texture2D, MaskData> maskDataManager = new();
@@ -75,23 +75,23 @@ public class World : Singleton<World>
             time = saveFile.time;
 
             difficulty = saveFile.difficulty;
-            saveScene = saveFile.scene;
+            savedScene = saveFile.scene;
 
-            savePlayerX = saveFile.playerX;
-            savePlayerY = saveFile.playerY;
-            saveGrav = saveFile.playerGrav;
+            savedPlayerX = saveFile.playerX;
+            savedPlayerY = saveFile.playerY;
+            savedGrav = saveFile.playerGrav;
         }
         gameStarted = true;
         autosave = false;
-        grav = saveGrav;
+        grav = savedGrav;
 
         foreach (var p in FindObjectsOfType<Player>())
             Destroy(p.gameObject);
 
         var player = Instantiate(playerPrefab);
-        player.gameObject.transform.position = new Vector3(savePlayerX, savePlayerY);
+        player.gameObject.transform.position = new Vector3(savedPlayerX, savedPlayerY);
 
-        SceneManager.LoadScene(saveScene);
+        SceneManager.LoadScene(savedScene);
     }
 
     public void SaveGame(bool savePosition)
@@ -101,10 +101,10 @@ public class World : Singleton<World>
             var player = FindObjectOfType<Player>();
             if (player != null)
             {
-                saveScene = SceneManager.GetActiveScene().name;
-                savePlayerX = player.transform.position.x;
-                savePlayerY = player.transform.position.y;
-                saveGrav = grav;
+                savedScene = SceneManager.GetActiveScene().name;
+                savedPlayerX = player.transform.position.x;
+                savedPlayerY = player.transform.position.y;
+                savedGrav = grav;
             }
         }
 
@@ -113,10 +113,10 @@ public class World : Singleton<World>
             death = death,
             time = time,
             difficulty = difficulty,
-            scene = saveScene,
-            playerX = savePlayerX,
-            playerY = savePlayerY,
-            playerGrav = saveGrav,
+            scene = savedScene,
+            playerX = savedPlayerX,
+            playerY = savedPlayerY,
+            playerGrav = savedGrav,
         };
 
         var saveJson = JsonUtility.ToJson(saveFile);
