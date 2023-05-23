@@ -117,20 +117,20 @@ public class PixelPerfectCollider : MonoBehaviour
             x1, y1, xScale, yScale, rotation);
 
         // For each colliders
-        foreach (var i in cders)
+        foreach (var col in cders)
         {
-            if (i == this) // Don't check himself
+            if (col == this) // Don't check himself
                 continue;
 
-            if (i.enableSpriteAnimator)
-                i.maskData = World.instance.maskDataManager[i.maskRenderer.sprite.texture];
+            if (col.enableSpriteAnimator)
+                col.maskData = World.instance.maskDataManager[col.maskRenderer.sprite.texture];
 
-            var x2 = i.xPos;
-            var y2 = i.yPos;
+            var x2 = col.xPos;
+            var y2 = col.yPos;
 
             // Get other bounding box with transform
-            GetBoundingBox(i.left, i.right, i.top, i.bottom, out var left2, out var right2, out var top2, out var bottom2,
-                x2, y2, i.xScale, i.yScale, i.rotation);
+            GetBoundingBox(col.left, col.right, col.top, col.bottom, out var left2, out var right2, out var top2, out var bottom2,
+                x2, y2, col.xScale, col.yScale, col.rotation);
 
             // Get intersection
             int iLeft = Max(left1, left2);
@@ -142,14 +142,14 @@ public class PixelPerfectCollider : MonoBehaviour
                 continue;
 
             // Check each pixel
-            if (rotation == 0 && i.rotation == 0)
+            if (rotation == 0 && col.rotation == 0)
             {
                 // Not rotated
                 var xo1 = xPivot;
                 var yo1 = yPivot;
 
-                var xo2 = i.xPivot;
-                var yo2 = i.yPivot;
+                var xo2 = col.xPivot;
+                var yo2 = col.yPivot;
 
                 for (int yy = iBottom; yy <= iTop; yy++)
                 {
@@ -159,12 +159,12 @@ public class PixelPerfectCollider : MonoBehaviour
                         var py1 = (int)((yy - y1) / yScale + yo1);
                         var p1 = px1 >= 0 && py1 >= 0 && px1 < width && py1 < height && boolData[px1 + py1 * width];
 
-                        var px2 = (int)((xx - x2) / i.xScale + xo2);
-                        var py2 = (int)((yy - y2) / i.yScale + yo2);
-                        var p2 = px2 >= 0 && py2 >= 0 && px2 < i.width && py2 < i.height && i.boolData[px2 + py2 * i.width];
+                        var px2 = (int)((xx - x2) / col.xScale + xo2);
+                        var py2 = (int)((yy - y2) / col.yScale + yo2);
+                        var p2 = px2 >= 0 && py2 >= 0 && px2 < col.width && py2 < col.height && col.boolData[px2 + py2 * col.width];
 
                         if (p1 && p2)
-                            return i.gameObject;
+                            return col.gameObject;
                     }
                 }
             }
@@ -176,10 +176,10 @@ public class PixelPerfectCollider : MonoBehaviour
                 var xo1 = xPivot;
                 var yo1 = yPivot;
 
-                var sina2 = Sin(-i.rotation * Deg2Rad);
-                var cosa2 = Cos(-i.rotation * Deg2Rad);
-                var xo2 = i.xPivot;
-                var yo2 = i.yPivot;
+                var sina2 = Sin(-col.rotation * Deg2Rad);
+                var cosa2 = Cos(-col.rotation * Deg2Rad);
+                var xo2 = col.xPivot;
+                var yo2 = col.yPivot;
 
                 for (int yy = iBottom; yy <= iTop; yy++)
                 {
@@ -195,12 +195,12 @@ public class PixelPerfectCollider : MonoBehaviour
                         var lx2 = xx - x2;
                         var ly2 = yy - y2;
                         RotateAround(lx2, ly2, 0, 0, sina2, cosa2, out var lx2a, out var ly2a);
-                        var px2 = (int)(lx2a / i.xScale + xo2);
-                        var py2 = (int)(ly2a / i.yScale + yo2);
-                        var p2 = px2 >= 0 && py2 >= 0 && px2 < i.width && py2 < i.height && i.boolData[px2 + py2 * i.width];
+                        var px2 = (int)(lx2a / col.xScale + xo2);
+                        var py2 = (int)(ly2a / col.yScale + yo2);
+                        var p2 = px2 >= 0 && py2 >= 0 && px2 < col.width && py2 < col.height && col.boolData[px2 + py2 * col.width];
 
                         if (p1 && p2)
-                            return i.gameObject;
+                            return col.gameObject;
                     }
                 }
             }
@@ -286,7 +286,7 @@ public class PixelPerfectCollider : MonoBehaviour
                 }
             }
         }
-    OutBottom:
+        OutBottom:
 
         // Get bbox top
         for (var y = texture.height - 1; y >= 0; y--)
@@ -300,7 +300,7 @@ public class PixelPerfectCollider : MonoBehaviour
                 }
             }
         }
-    OutTop:
+        OutTop:
 
         // Get bbox left
         for (var x = 0; x < texture.width; x++)
@@ -314,7 +314,7 @@ public class PixelPerfectCollider : MonoBehaviour
                 }
             }
         }
-    OutLeft:
+        OutLeft:
 
         // Get bbox right
         for (var x = texture.width - 1; x >= 0; x--)
@@ -328,7 +328,7 @@ public class PixelPerfectCollider : MonoBehaviour
                 }
             }
         }
-    OutRight:
+        OutRight:
 
         // Other stuff
         maskData.width = texture.width;

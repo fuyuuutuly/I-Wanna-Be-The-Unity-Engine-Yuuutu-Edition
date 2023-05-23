@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.SceneManagement;
 
-public class DifficultyMenu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
     int select = 0;
     Vector3 cursorStart;
@@ -15,11 +15,11 @@ public class DifficultyMenu : MonoBehaviour
     Text[] deathsText = new Text[3];
     Text[] timeText = new Text[3];
 
-    public string difficultySelect;
+    public string nextScene;
 
     private void Start()
     {
-        var cursor = GameObject.Find("Cursor");
+        GameObject cursor = GameObject.Find("Cursor");
         cursorStart = cursor.transform.position;
 
         for (var i = 0; i < 3; i++)
@@ -36,8 +36,8 @@ public class DifficultyMenu : MonoBehaviour
             }
             else
             {
-                var text = File.ReadAllText($"Data/save{i + 1}");
-                var saveFile = JsonUtility.FromJson<SaveFile>(text);
+                string text = File.ReadAllText($"Data/save{i + 1}");
+                SaveFile saveFile = JsonUtility.FromJson<SaveFile>(text);
 
                 difficultyText[i].text = saveFile.difficulty.ToString();
                 deathsText[i].text = $"Deaths: {saveFile.death}";
@@ -63,9 +63,9 @@ public class DifficultyMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
         {
             World.instance.savenum = select + 1;
-            SceneManager.LoadScene(difficultySelect);
+            SceneManager.LoadScene(nextScene);
         }
-        var cursor = GameObject.Find("Cursor");
+        GameObject cursor = GameObject.Find("Cursor");
         cursor.transform.position = cursorStart + new Vector3(240f * select, 0);
     }
 }

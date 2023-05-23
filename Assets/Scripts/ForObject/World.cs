@@ -10,11 +10,11 @@ using UnityEngine.SceneManagement;
 public class World : Singleton<World>
 {
 
-    [SerializeField] private string roomCaption = "I Wanna Be The Unity Engine";
+    [SerializeField] string roomCaption = "I Wanna Be The Unity Engine";
 
-    [NonSerialized] private WindowCaption windowCaption = new();
+    WindowCaption windowCaption = new();
 
-    [SerializeField] public string startScene = "Stage01";
+    public string startScene = "Stage01";
 
     [ReadOnly] public int savenum = 1;
 
@@ -32,8 +32,8 @@ public class World : Singleton<World>
     [ReadOnly] public float savedPlayerY;
     [ReadOnly] public int savedGrav;
 
-    [SerializeField] public Player playerPrefab;
-    [SerializeField] public AudioSource deathSound;
+    public Player playerPrefab;
+    public AudioSource deathSound;
 
     // May move these to separate class
     public Dictionary<Texture2D, MaskData> maskDataManager = new();
@@ -131,13 +131,6 @@ public class World : Singleton<World>
         death++;
     }
 
-    public enum Difficulty
-    {
-        Medium = 0,
-        Hard = 1,
-        VeryHard = 2,
-        Impossible = 3,
-    }
 }
 
 class WindowCaption

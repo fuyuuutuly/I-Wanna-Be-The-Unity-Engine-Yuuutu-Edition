@@ -9,18 +9,9 @@ public class WarpStart : MonoBehaviour
     public Difficulty difficulty;
     public PixelPerfectCollider collider;
 
-    public enum Difficulty
-    {
-        Medium = 0,
-        Hard = 1,
-        VeryHard = 2,
-        Impossible = 3,
-        LoadGame = 4,
-    }
-
     void Start()
     {
-        collider = GetComponent<PixelPerfectCollider>();    
+        collider = GetComponent<PixelPerfectCollider>();
     }
 
     void Update()
@@ -38,7 +29,7 @@ public class WarpStart : MonoBehaviour
                 {
                     // Restart scene
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                    
+
                 }
             }
             else
@@ -47,7 +38,7 @@ public class WarpStart : MonoBehaviour
                 World.instance.gameStarted = true;
                 World.instance.autosave = true;
 
-                World.instance.difficulty = (World.Difficulty)difficulty;
+                World.instance.difficulty = difficulty;
 
                 if (File.Exists($"Data/save{World.instance.savenum}"))
                     File.Delete($"Data/save{World.instance.savenum}");

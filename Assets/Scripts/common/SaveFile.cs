@@ -3,7 +3,7 @@
 [Serializable]
 class SaveFile
 {
-    public World.Difficulty difficulty;
+    public Difficulty difficulty;
     public int death;
     public int time;
 

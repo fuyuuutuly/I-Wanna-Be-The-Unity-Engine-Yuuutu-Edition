@@ -12,9 +12,9 @@ public class Save : MonoBehaviour
 
     private void Start()
     {
-        if ((int)World.instance.difficulty > (int)World.Difficulty.Hard)
+        if ((int)World.instance.difficulty > (int)Difficulty.Hard)
         {
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject);
             return;
         }
         collider = GetComponent<PixelPerfectCollider>();
@@ -50,7 +50,7 @@ public class Save : MonoBehaviour
     {
         if (canSave)
         {
-            var player = GameObject.FindObjectOfType<Player>();
+            var player = FindObjectOfType<Player>();
             if (player != null)
             {
                 canSave = false;
