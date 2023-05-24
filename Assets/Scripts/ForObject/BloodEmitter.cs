@@ -12,13 +12,13 @@ public class BloodEmitter : MonoBehaviour
         timer -= 1;
         if (timer <= 0)
         {
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject);
             return;
         }
         for (var i = 0; i < 40; i++)
         {
             // Create blood instance...
-            var inst = GameObject.Instantiate(blood);
+            var inst = Instantiate(blood);
             inst.transform.position = transform.position;
         }
     }

@@ -8,9 +8,9 @@ public class PlayerStart : MonoBehaviour
 
     void Awake()
     {
-        if (GameObject.FindObjectsOfType<Player>().Length == 0)
+        if (FindObjectsOfType<Player>().Length == 0)
         {
-            var inst = GameObject.Instantiate(player);
+            var inst = Instantiate(player);
             inst.transform.position = gameObject.transform.position + new Vector3(17, -23);
         }
     }

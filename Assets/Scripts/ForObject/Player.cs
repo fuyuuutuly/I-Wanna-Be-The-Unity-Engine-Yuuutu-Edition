@@ -12,10 +12,10 @@ public class Player : MonoBehaviour
     float maxSpeed = 3;
     float maxVspeed = 9;
 
-    public bool djump = true;
+    [ReadOnly] public bool djump = true;
 
-    public float hspeed = 0;
-    public float vspeed = 0;
+    [ReadOnly] public float hspeed = 0;
+    [ReadOnly] public float vspeed = 0;
     float gravity = -0.4f;
 
     public float x { get => transform.position.x; set => transform.position = new Vector3(value, y, transform.position.z); }
@@ -43,9 +43,9 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         // Do something to help us debug the level
-        if (GameObject.FindObjectsOfType<World>().Length < 1)
+        if (FindObjectsOfType<World>().Length < 1)
         {
-            GameObject.Instantiate(world);
+            Instantiate(world);
             World.instance.gameStarted = true;
             World.instance.savedScene = SceneManager.GetActiveScene().name;
             World.instance.autosave = true;
@@ -239,9 +239,9 @@ public class Player : MonoBehaviour
         // Killer check
         if (collider.PlaceMeeting(x, y, "Killer"))
         {
-            var inst = GameObject.Instantiate(bloodEmitter);
+            var inst = Instantiate(bloodEmitter);
             inst.transform.position = transform.position;
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject);
             World.instance.KillPlayer();
         }
 
@@ -277,9 +277,9 @@ public class Player : MonoBehaviour
     }
     void Shoot()
     {
-        if (GameObject.FindObjectsOfType<Bullet>().Length < 4)
+        if (FindObjectsOfType<Bullet>().Length < 4)
         {
-            var inst = GameObject.Instantiate(bullet);
+            var inst = Instantiate(bullet);
             inst.transform.position = new Vector3(x, y);
             shootSound.Play();
         }

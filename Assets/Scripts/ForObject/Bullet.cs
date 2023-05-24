@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        var player = GameObject.FindObjectOfType<Player>();
+        var player = FindObjectOfType<Player>();
         foreach (var i in player.GetComponentsInChildren<Transform>())
         {
             if (i.gameObject.name == "Sprite")
@@ -24,13 +24,13 @@ public class Bullet : MonoBehaviour
     {
         if (timer-- < 0)
         {
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject);
         }
 
         transform.position += new Vector3(hspeed * xscale, 0);
         if (collider.PlaceMeeting(transform.position.x, transform.position.y, "Block"))
         {
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }
