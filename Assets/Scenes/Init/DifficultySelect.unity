@@ -327,7 +327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalScale.z
@@ -335,11 +335,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -32
+      value: 352
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -288
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1112,7 +1112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalScale.z
@@ -1120,11 +1120,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -96
+      value: -416
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -288
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1788,7 +1788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalScale.y
@@ -1800,11 +1800,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -64
+      value: -416
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -288
+      value: 288
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1971,7 +1971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalScale.y
@@ -1983,7 +1983,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -416
       objectReference: {fileID: 0}
     - target: {fileID: 9046691916855125545, guid: c98af38628dc4a34e8e552b94e36b3c1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2352,6 +2352,7 @@ GameObject:
   - component: {fileID: 2138017878}
   - component: {fileID: 2138017880}
   - component: {fileID: 2138017879}
+  - component: {fileID: 2138017881}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -3499,3 +3500,16 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &2138017881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138017877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5744ee1f931ca384b9f96d2eeaa668df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableSpriteAnimator: 0
