@@ -60,7 +60,10 @@ MonoBehaviour:
   savedPlayerY: 0
   savedGrav: 0
   playerPrefab: {fileID: 7940218150493441083, guid: 19b8ea2a2b1fc9a44833a91169799d45, type: 3}
+  gameoverPrefab: {fileID: 7714275823207174076, guid: 1a78a377bd117504cacde612db9a69cd, type: 3}
+  isEnableDeathSound: 0
   deathSound: {fileID: 110343573212235999}
+  isEnableDeathMusic: 1
   deathMusic: {fileID: 5131086998306480182}
 --- !u!82 &110343573212235999
 AudioSource:

@@ -33,13 +33,11 @@ public class World : Singleton<World>
     [ReadOnly] public int savedGrav;
 
     public Player playerPrefab;
+    public GameObject gameoverPrefab;
     public bool isEnableDeathSound = false;
     public AudioSource deathSound;
     public bool isEnableDeathMusic = true;
     public AudioSource deathMusic;
-
-
-
 
     // May move these to separate class
     public Dictionary<Texture2D, MaskData> maskDataManager = new();
@@ -133,6 +131,12 @@ public class World : Singleton<World>
     }
     public void KillPlayer()
     {
+        StartCoroutine(Utility.DelayCoroutine(0.6f, () =>
+        {
+            var mainCameraTransform = GameObject.FindWithTag("MainCamera").transform;
+            Instantiate(gameoverPrefab, new Vector3(mainCameraTransform.position.x, mainCameraTransform.position.y, 0), mainCameraTransform.rotation);
+        }));
+
         if (isEnableDeathMusic)
         {
             deathMusic.Play();
@@ -143,6 +147,8 @@ public class World : Singleton<World>
         }
         death++;
     }
+
+
 
 }
 
