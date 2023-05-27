@@ -1,12 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 #if UNITY_EDITOR
+
 using UnityEditor;
+
 #endif
 
-
 #if UNITY_EDITOR
+
 [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
 public class ReadOnlyDrawer : PropertyDrawer
 {
@@ -17,8 +20,9 @@ public class ReadOnlyDrawer : PropertyDrawer
         EditorGUI.EndDisabledGroup();
     }
 }
+
 #endif
 
 [System.AttributeUsage(System.AttributeTargets.Field)]
-public class ReadOnlyAttribute : PropertyAttribute { }
-
+public class ReadOnlyAttribute : PropertyAttribute
+{ }

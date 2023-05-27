@@ -5,14 +5,12 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 // World singleton helps us manage the game
 public class World : Singleton<World>
 {
-
     public string roomCaption = "I Wanna Be The Unity Engine";
 
-    WindowCaption windowCaption = new();
+    private WindowCaption windowCaption = new();
 
     public string startScene = "Stage01";
 
@@ -41,9 +39,10 @@ public class World : Singleton<World>
 
     // May move these to separate class
     public Dictionary<Texture2D, MaskData> maskDataManager = new();
+
     public Dictionary<string, List<PixelPerfectCollider>> colliders = new();
 
-    void Start()
+    private void Start()
     {
         // Initialize game
         windowCaption.SetWindowCaption(roomCaption);
@@ -52,7 +51,7 @@ public class World : Singleton<World>
         Application.targetFrameRate = 50;
     }
 
-    void Update()
+    private void Update()
     {
         if (gameStarted)
         {
@@ -129,12 +128,18 @@ public class World : Singleton<World>
 
         File.WriteAllText($"Data/save{savenum}", saveJson);
     }
+
     public void KillPlayer()
     {
-        StartCoroutine(Utility.DelayCoroutine(0.6f, () =>
+        // GAMEOVER の表示
+        StartCoroutine(Utility.Delay(0.6f, () =>
         {
             var mainCameraTransform = GameObject.FindWithTag("MainCamera").transform;
-            Instantiate(gameoverPrefab, new Vector3(mainCameraTransform.position.x, mainCameraTransform.position.y, 0), mainCameraTransform.rotation);
+            Instantiate(
+                gameoverPrefab,
+                new Vector3(mainCameraTransform.position.x, mainCameraTransform.position.y, 0),
+                mainCameraTransform.rotation
+            );
         }));
 
         if (isEnableDeathMusic)
@@ -147,25 +152,22 @@ public class World : Singleton<World>
         }
         death++;
     }
-
-
-
 }
 
-class WindowCaption
+internal class WindowCaption
 {
-    delegate bool EnumWindowsCallBack(IntPtr hwnd, IntPtr lParam);
+    private delegate bool EnumWindowsCallBack(IntPtr hwnd, IntPtr lParam);
 
     [DllImport("user32", CharSet = CharSet.Unicode)]
-    static extern bool SetWindowTextW(IntPtr hwnd, string title);
+    private static extern bool SetWindowTextW(IntPtr hwnd, string title);
 
     [DllImport("user32")]
-    static extern int EnumWindows(EnumWindowsCallBack lpEnumFunc, IntPtr lParam);
+    private static extern int EnumWindows(EnumWindowsCallBack lpEnumFunc, IntPtr lParam);
 
     [DllImport("user32")]
-    static extern uint GetWindowThreadProcessId(IntPtr hWnd, ref IntPtr lpdwProcessId);
+    private static extern uint GetWindowThreadProcessId(IntPtr hWnd, ref IntPtr lpdwProcessId);
 
-    IntPtr windowHandle;
+    private IntPtr windowHandle;
 
     public WindowCaption()
     {
@@ -178,7 +180,7 @@ class WindowCaption
         SetWindowTextW(windowHandle, caption);
     }
 
-    bool EnumWindCallback(IntPtr hwnd, IntPtr lParam)
+    private bool EnumWindCallback(IntPtr hwnd, IntPtr lParam)
     {
         IntPtr pid = IntPtr.Zero;
         GetWindowThreadProcessId(hwnd, ref pid);
