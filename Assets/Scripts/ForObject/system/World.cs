@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class World : Singleton<World>
 {
 
-    [SerializeField] string roomCaption = "I Wanna Be The Unity Engine";
+    public string roomCaption = "I Wanna Be The Unity Engine";
 
     WindowCaption windowCaption = new();
 
@@ -33,7 +33,13 @@ public class World : Singleton<World>
     [ReadOnly] public int savedGrav;
 
     public Player playerPrefab;
+    public bool isEnableDeathSound = false;
     public AudioSource deathSound;
+    public bool isEnableDeathMusic = true;
+    public AudioSource deathMusic;
+
+
+
 
     // May move these to separate class
     public Dictionary<Texture2D, MaskData> maskDataManager = new();
@@ -127,7 +133,14 @@ public class World : Singleton<World>
     }
     public void KillPlayer()
     {
-        deathSound.Play();
+        if (isEnableDeathMusic)
+        {
+            deathMusic.Play();
+        }
+        if (isEnableDeathSound)
+        {
+            deathSound.Play();
+        }
         death++;
     }
 
