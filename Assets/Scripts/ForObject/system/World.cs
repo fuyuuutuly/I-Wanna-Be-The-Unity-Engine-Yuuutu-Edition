@@ -32,6 +32,7 @@ public class World : Singleton<World>
 
     public Player playerPrefab;
     public GameObject gameoverPrefab;
+    public AudioSource BGM;
     public bool isEnableDeathSound = false;
     public AudioSource deathSound;
     public bool isEnableDeathMusic = true;
@@ -160,6 +161,8 @@ public class World : Singleton<World>
                 mainCameraTransform.rotation
             );
         }));
+
+        BGM.Stop();
 
         if (isEnableDeathMusic)
         {
