@@ -9,12 +9,12 @@ public class WarpStart : MonoBehaviour
     public Difficulty difficulty;
     public PixelPerfectCollider collider;
 
-    void Start()
+    private void Start()
     {
         collider = GetComponent<PixelPerfectCollider>();
     }
 
-    void Update()
+    private void Update()
     {
         if (collider.PlaceMeeting(transform.position.x, transform.position.y, "Player"))
         {
@@ -29,7 +29,6 @@ public class WarpStart : MonoBehaviour
                 {
                     // Restart scene
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
                 }
             }
             else
@@ -42,6 +41,9 @@ public class WarpStart : MonoBehaviour
 
                 if (File.Exists($"Data/save{World.instance.savenum}"))
                     File.Delete($"Data/save{World.instance.savenum}");
+
+                var player = GameObject.FindWithTag("Player");
+                Destroy(player);
 
                 SceneManager.LoadScene(World.instance.startScene);
             }
