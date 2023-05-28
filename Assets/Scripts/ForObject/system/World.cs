@@ -55,7 +55,7 @@ public class World : Singleton<World>
     {
         if (gameStarted)
         {
-            // Restart game
+            // Restart Game
             if (Input.GetKeyDown(KeyCode.R))
             {
                 SaveGame(false);
@@ -64,6 +64,25 @@ public class World : Singleton<World>
 
             // Update title
             windowCaption.SetWindowCaption(roomCaption);
+        }
+
+        // End Game
+        if (Input.GetKey(KeyCode.Escape))
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+
+        // to Title
+        if (Input.GetKey(KeyCode.F2))
+        {
+            var player = GameObject.FindWithTag("Player");
+            Destroy(player);
+            Destroy(gameObject);
+            SceneManager.LoadScene("Title");
         }
     }
 
@@ -131,7 +150,7 @@ public class World : Singleton<World>
 
     public void KillPlayer()
     {
-        // GAMEOVER の表示
+        // show GAMEOVER
         StartCoroutine(Utility.Delay(0.6f, () =>
         {
             var mainCameraTransform = GameObject.FindWithTag("MainCamera").transform;
