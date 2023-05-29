@@ -14,6 +14,7 @@ TagManager:
   - Water3
   - WalljumpR
   - WalljumpL
+  - World
   layers:
   - Default
   - TransparentFX

@@ -114,6 +114,9 @@ public class World : Singleton<World>
         var player = Instantiate(playerPrefab);
         player.gameObject.transform.position = new Vector3(savedPlayerX, savedPlayerY);
 
+        deathMusic.Stop();
+        deathSound.Stop();
+
         SceneManager.LoadScene(savedScene);
     }
 
@@ -121,7 +124,7 @@ public class World : Singleton<World>
     {
         if (savePosition)
         {
-            var player = FindObjectOfType<Player>();
+            var player = GameObject.FindWithTag("Player");
             if (player != null)
             {
                 savedScene = SceneManager.GetActiveScene().name;
@@ -152,17 +155,14 @@ public class World : Singleton<World>
     public void KillPlayer()
     {
         // show GAMEOVER
-        StartCoroutine(Utility.Delay(0.6f, () =>
-        {
-            var mainCameraTransform = GameObject.FindWithTag("MainCamera").transform;
-            Instantiate(
-                gameoverPrefab,
-                new Vector3(mainCameraTransform.position.x, mainCameraTransform.position.y, 0),
-                mainCameraTransform.rotation
-            );
-        }));
+        var mainCameraTransform = GameObject.FindWithTag("MainCamera").transform;
+        Instantiate(
+            gameoverPrefab,
+            new Vector3(mainCameraTransform.position.x, mainCameraTransform.position.y, 0),
+            mainCameraTransform.rotation
+        );
 
-        BGM.Stop();
+        BGM.Pause();
 
         if (isEnableDeathMusic)
         {
