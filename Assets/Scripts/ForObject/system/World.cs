@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -50,6 +51,9 @@ public class World : Singleton<World>
 
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 50;
+
+        // calculate Time
+        StartCoroutine(CalcTime());
     }
 
     private void Update()
@@ -59,12 +63,19 @@ public class World : Singleton<World>
             // Restart Game
             if (Input.GetKeyDown(KeyCode.R))
             {
+                if (GameObject.FindWithTag("Player"))
+                {
+                    death++;
+                }
+
                 SaveGame(false);
                 LoadGame(false);
             }
 
             // Update title
-            windowCaption.SetWindowCaption(roomCaption);
+            var title = $"{roomCaption} [{difficulty}] SaveData{savenum} [Esc]:End Death:{death} Time:{Utility.SecToTime(time)}";
+            windowCaption.SetWindowCaption(title);
+            Debug.Log(title);
         }
 
         // End Game
@@ -109,7 +120,9 @@ public class World : Singleton<World>
         grav = savedGrav;
 
         foreach (var p in FindObjectsOfType<Player>())
+        {
             Destroy(p.gameObject);
+        }
 
         var player = Instantiate(playerPrefab);
         player.gameObject.transform.position = new Vector3(savedPlayerX, savedPlayerY);
@@ -173,6 +186,18 @@ public class World : Singleton<World>
             deathSound.Play();
         }
         death++;
+    }
+
+    public IEnumerator CalcTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f);
+            if (GameObject.FindWithTag("Player"))
+            {
+                time++;
+            }
+        }
     }
 }
 
