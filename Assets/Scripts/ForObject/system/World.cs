@@ -46,7 +46,7 @@ public class World : Singleton<World>
     public Dictionary<string, List<PixelPerfectCollider>> colliders = new();
 
     // I'm using PlayerInput because if I try to use the arrow keys on the keyboard directly, the gamepad stops responding.
-    // * Also, when using GetKey, it becomes unable to obtain correct values during scene transitions.
+    // * Also, when using GetKey, it becomes unable to obtain correct values during restart or scene transitions.
     public InputAction KeyLeft
     {
         get { return playerInput.currentActionMap["Left"]; }
