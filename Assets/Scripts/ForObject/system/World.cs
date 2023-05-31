@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 // World singleton helps us manage the game
 public class World : Singleton<World>
@@ -32,7 +33,7 @@ public class World : Singleton<World>
     [ReadOnly] public int savedGrav;
 
     public Player playerPrefab;
-    public GameObject gameoverPrefab;
+    public GAMEOVER gameoverPrefab;
     public AudioSource BGM;
     public bool isEnableDeathSound = false;
     public AudioSource deathSound;
@@ -44,6 +45,30 @@ public class World : Singleton<World>
 
     public Dictionary<string, List<PixelPerfectCollider>> colliders = new();
 
+    // I'm using PlayerInput because if I try to use the arrow keys on the keyboard directly, the gamepad stops responding.
+    // * Also, when using GetKey, it becomes unable to obtain correct values during scene transitions.
+    public InputAction KeyLeft
+    {
+        get { return playerInput.currentActionMap["Left"]; }
+    }
+
+    public InputAction KeyRight
+    {
+        get { return playerInput.currentActionMap["Right"]; }
+    }
+
+    public InputAction KeyUp
+    {
+        get { return playerInput.currentActionMap["Up"]; }
+    }
+
+    public InputAction KeyDown
+    {
+        get { return playerInput.currentActionMap["Down"]; }
+    }
+
+    private PlayerInput playerInput;
+
     private void Start()
     {
         // Initialize game
@@ -54,6 +79,8 @@ public class World : Singleton<World>
 
         // calculate Time
         StartCoroutine(CalcTime());
+
+        playerInput = GetComponent<PlayerInput>();
     }
 
     private void Update()
@@ -61,7 +88,7 @@ public class World : Singleton<World>
         if (gameStarted)
         {
             // Restart Game
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Keyboard.current[Key.R].wasPressedThisFrame)
             {
                 if (GameObject.FindWithTag("Player"))
                 {
@@ -75,11 +102,10 @@ public class World : Singleton<World>
             // Update title
             var title = $"{roomCaption} [{difficulty}] SaveData{savenum} [Esc]:End Death:{death} Time:{Utility.SecToTime(time)}";
             windowCaption.SetWindowCaption(title);
-            Debug.Log(title);
         }
 
         // End Game
-        if (Input.GetKey(KeyCode.Escape))
+        if (Keyboard.current[Key.Escape].wasPressedThisFrame)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -89,7 +115,7 @@ public class World : Singleton<World>
         }
 
         // to Title
-        if (Input.GetKey(KeyCode.F2))
+        if (Keyboard.current[Key.F2].wasPressedThisFrame)
         {
             var player = GameObject.FindWithTag("Player");
             Destroy(player);
@@ -251,4 +277,12 @@ public class MaskData
     public int height;
 
     public bool[] boolData;
+}
+
+internal enum KeyState
+{
+    IsPressed,
+    IsReleased,
+    WasPressedThisFrame,
+    WasReleasedThisFrame
 }

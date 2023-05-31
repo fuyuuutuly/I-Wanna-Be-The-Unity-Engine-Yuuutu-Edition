@@ -4,35 +4,37 @@ using UnityEngine;
 using static UnityEngine.Mathf;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    float jump = -8.5f;
-    float jump2 = -7;
-    float maxSpeed = 3;
-    float maxVspeed = 9;
+    private float jump = -8.5f;
+    private float jump2 = -7;
+    private float maxSpeed = 3;
+    private float maxVspeed = 9;
 
     [ReadOnly] public bool djump = true;
 
     [ReadOnly] public float hspeed = 0;
     [ReadOnly] public float vspeed = 0;
-    float gravity = -0.4f;
+    private float gravity = -0.4f;
 
     public float x { get => transform.position.x; set => transform.position = new Vector3(value, y, transform.position.z); }
     public float y { get => transform.position.y; set => transform.position = new Vector3(x, value, transform.position.z); }
 
-    float xprevious;
-    float yprevious;
+    private float xprevious;
+    private float yprevious;
 
-    bool onPlatform = false;
+    private bool onPlatform = false;
 
     public GameObject sprite;
-    SpriteAnimator animator;
+    private SpriteAnimator animator;
 
     public World world;
-    PixelPerfectCollider collider;
+    private PixelPerfectCollider pixCollider;
     public BloodEmitter bloodEmitter;
     public Bullet bullet;
+    public PlayerInput playerInput;
 
     public AudioSource jumpSound;
     public AudioSource djumpSound;
@@ -40,24 +42,26 @@ public class Player : MonoBehaviour
     public AudioSource walljumpSound;
 
 #if UNITY_EDITOR
+
     private void Awake()
     {
         // Do something to help us debug the level
-        if (FindObjectsOfType<World>().Length < 1)
+        if (!GameObject.FindGameObjectWithTag("World"))
         {
-            Instantiate(world);
+            world = Instantiate(world);
             World.instance.gameStarted = true;
             World.instance.savedScene = SceneManager.GetActiveScene().name;
             World.instance.autosave = true;
         }
     }
+
 #endif
 
-    void Start()
+    private void Start()
     {
         DontDestroyOnLoad(gameObject);
 
-        collider = GetComponent<PixelPerfectCollider>();
+        pixCollider = GetComponent<PixelPerfectCollider>();
         animator = sprite.GetComponent<SpriteAnimator>();
 
         if (World.instance.autosave)
@@ -67,13 +71,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         xprevious = x;
         yprevious = y;
 
-        var L = Input.GetKey(KeyCode.LeftArrow);
-        var R = Input.GetKey(KeyCode.RightArrow);
+        var L = World.instance.KeyLeft.IsPressed();
+        var R = World.instance.KeyRight.IsPressed();
 
         var h = 0;
 
@@ -82,9 +86,9 @@ public class Player : MonoBehaviour
         else if (L)
             h = -1;
 
-        var notOnBlock = !collider.PlaceMeeting(x, y - 1, "Block");
-        var onVineL = collider.PlaceMeeting(x - 1, y, "WalljumpL") && notOnBlock;
-        var onVineR = collider.PlaceMeeting(x + 1, y, "WalljumpR") && notOnBlock;
+        var notOnBlock = !pixCollider.PlaceMeeting(x, y - 1, "Block");
+        var onVineL = pixCollider.PlaceMeeting(x - 1, y, "WalljumpL") && notOnBlock;
+        var onVineR = pixCollider.PlaceMeeting(x + 1, y, "WalljumpR") && notOnBlock;
 
         if (h != 0)
         {
@@ -116,7 +120,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (!collider.PlaceMeeting(x, y - 4, "Platform"))
+            if (!pixCollider.PlaceMeeting(x, y - 4, "Platform"))
             {
                 onPlatform = false;
             }
@@ -182,37 +186,37 @@ public class Player : MonoBehaviour
         // Collision
 
         // Block check
-        if (collider.PlaceMeeting(x, y, "Block"))
+        if (pixCollider.PlaceMeeting(x, y, "Block"))
         {
             x = xprevious;
             y = yprevious;
 
-            if (collider.PlaceMeeting(x + hspeed, y, "Block"))
+            if (pixCollider.PlaceMeeting(x + hspeed, y, "Block"))
             {
-                if (hspeed <= 0) while (!collider.PlaceMeeting(x - 1, y, "Block")) x--;
-                if (hspeed > 0) while (!collider.PlaceMeeting(x + 1, y, "Block")) x++;
+                if (hspeed <= 0) while (!pixCollider.PlaceMeeting(x - 1, y, "Block")) x--;
+                if (hspeed > 0) while (!pixCollider.PlaceMeeting(x + 1, y, "Block")) x++;
                 hspeed = 0;
             }
 
-            if (collider.PlaceMeeting(x, y + vspeed, "Block"))
+            if (pixCollider.PlaceMeeting(x, y + vspeed, "Block"))
             {
-                if (vspeed >= 0) while (!collider.PlaceMeeting(x, y + 1, "Block")) y++;
+                if (vspeed >= 0) while (!pixCollider.PlaceMeeting(x, y + 1, "Block")) y++;
                 if (vspeed < 0)
                 {
-                    while (!collider.PlaceMeeting(x, y - 1, "Block")) y--;
+                    while (!pixCollider.PlaceMeeting(x, y - 1, "Block")) y--;
                     djump = true;
                 }
                 vspeed = 0;
             }
 
-            if (collider.PlaceMeeting(x + hspeed, y + vspeed, "Block"))
+            if (pixCollider.PlaceMeeting(x + hspeed, y + vspeed, "Block"))
             {
                 hspeed = 0;
             }
 
             x += hspeed;
             y += vspeed;
-            if (collider.PlaceMeeting(x, y, "Block"))
+            if (pixCollider.PlaceMeeting(x, y, "Block"))
             {
                 x = xprevious;
                 y = yprevious;
@@ -220,7 +224,7 @@ public class Player : MonoBehaviour
         }
 
         // Platform check
-        var platform = collider.InstancePlace(x, y, "Platform");
+        var platform = pixCollider.InstancePlace(x, y, "Platform");
         if (platform != null)
         {
             if (y - vspeed / 2 >= platform.transform.position.y)
@@ -237,7 +241,7 @@ public class Player : MonoBehaviour
         }
 
         // Killer check
-        if (collider.PlaceMeeting(x, y, "Killer"))
+        if (pixCollider.PlaceMeeting(x, y, "Killer"))
         {
             var inst = Instantiate(bloodEmitter);
             inst.transform.position = transform.position;
@@ -248,34 +252,37 @@ public class Player : MonoBehaviour
         // Update position
         transform.position = new Vector3(x, y);
     }
-    void Jump()
+
+    private void Jump()
     {
-        if (collider.PlaceMeeting(x, y - 1, "Block") || collider.PlaceMeeting(x, y - 1, "Platform") || onPlatform
-            || collider.PlaceMeeting(x, y - 1, "Water"))
+        if (pixCollider.PlaceMeeting(x, y - 1, "Block") || pixCollider.PlaceMeeting(x, y - 1, "Platform") || onPlatform
+            || pixCollider.PlaceMeeting(x, y - 1, "Water"))
         {
             vspeed = -jump;
             djump = true;
             jumpSound.Play();
         }
-        else if (djump || collider.PlaceMeeting(x, y - 1, "Water2"))
+        else if (djump || pixCollider.PlaceMeeting(x, y - 1, "Water2"))
         {
             animator.currentAnimation = "Jump";
             vspeed = -jump2;
             djump = false;
             djumpSound.Play();
 
-            if (!collider.PlaceMeeting(x, y - 1, "Water3"))
+            if (!pixCollider.PlaceMeeting(x, y - 1, "Water3"))
                 djump = false;
             else
                 djump = true;
         }
     }
-    void VJump()
+
+    private void VJump()
     {
         if (vspeed > 0)
             vspeed *= 0.45f;
     }
-    void Shoot()
+
+    private void Shoot()
     {
         if (FindObjectsOfType<Bullet>().Length < 4)
         {

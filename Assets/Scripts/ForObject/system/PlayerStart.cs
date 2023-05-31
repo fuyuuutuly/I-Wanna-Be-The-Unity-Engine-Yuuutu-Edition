@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerStart : MonoBehaviour
 {
-    public GameObject player;
+    public Player player;
 
-    void Awake()
+    private void Awake()
     {
         if (FindObjectsOfType<Player>().Length == 0)
         {
-            var inst = Instantiate(player);
+            Player inst = Instantiate(player);
             inst.transform.position = gameObject.transform.position + new Vector3(17, -23);
         }
     }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8827961560328443830}
   - component: {fileID: 110343573212235999}
   - component: {fileID: 5131086998306480182}
+  - component: {fileID: 1283444824818339167}
   m_Layer: 0
   m_Name: World
   m_TagString: World
@@ -61,12 +62,14 @@ MonoBehaviour:
   savedPlayerY: 0
   savedGrav: 0
   playerPrefab: {fileID: 7940218150493441083, guid: 19b8ea2a2b1fc9a44833a91169799d45, type: 3}
-  gameoverPrefab: {fileID: 7714275823207174076, guid: 1a78a377bd117504cacde612db9a69cd, type: 3}
+  gameoverPrefab: {fileID: -8774603542976239458, guid: 1a78a377bd117504cacde612db9a69cd, type: 3}
   BGM: {fileID: 8827961560328443830}
   isEnableDeathSound: 0
   deathSound: {fileID: 110343573212235999}
   isEnableDeathMusic: 1
   deathMusic: {fileID: 5131086998306480182}
+  stateKeyLeft: 0
+  stateKeyRight: 0
 --- !u!82 &8827961560328443830
 AudioSource:
   m_ObjectHideFlags: 0
@@ -355,3 +358,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1283444824818339167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2677951181176309097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: dbcb53d052c6c1d4cb0873a736ee325b, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 24656ec3-f11b-4f18-94cd-894dfa4baedb
+    m_ActionName: Player/Right[/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 51cde5f9-6e03-464e-a4fc-2206402c88a8
+    m_ActionName: Player/Left[/Keyboard/leftArrow]
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: Keyb
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}

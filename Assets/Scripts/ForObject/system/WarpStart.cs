@@ -7,16 +7,15 @@ using UnityEngine.SceneManagement;
 public class WarpStart : MonoBehaviour
 {
     public Difficulty difficulty;
-    public PixelPerfectCollider collider;
+    public PixelPerfectCollider pixCollider;
 
     private void Start()
     {
-        collider = GetComponent<PixelPerfectCollider>();
     }
 
     private void Update()
     {
-        if (collider.PlaceMeeting(transform.position.x, transform.position.y, "Player"))
+        if (pixCollider.PlaceMeeting(transform.position.x, transform.position.y, "Player"))
         {
             if (difficulty == Difficulty.LoadGame)
             {

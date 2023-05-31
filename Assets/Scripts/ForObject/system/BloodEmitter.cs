@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BloodEmitter : MonoBehaviour
 {
-    float timer = 20;
-    public GameObject blood;
+    private float timer = 20;
+    public Blood blood;
 
-    void Update()
+    private void Update()
     {
         timer -= 1;
         if (timer <= 0)

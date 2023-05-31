@@ -5,10 +5,10 @@ using static UnityEngine.Mathf;
 
 public class Blood : MonoBehaviour
 {
-    float x, y, hspeed, vspeed, gravity, speed, direction = 0;
-    public PixelPerfectCollider collider;
+    private float x, y, hspeed, vspeed, gravity, speed, direction = 0;
+    public PixelPerfectCollider pixCollider;
 
-    void Start()
+    private void Start()
     {
         x = transform.position.x;
         y = transform.position.y;
@@ -19,14 +19,14 @@ public class Blood : MonoBehaviour
         vspeed = speed * Sin(direction * Deg2Rad);
     }
 
-    void Update()
+    private void Update()
     {
         vspeed += gravity;
 
         x += hspeed;
         y += vspeed;
 
-        if (collider.PlaceMeeting(x, y, "Block"))
+        if (pixCollider.PlaceMeeting(x, y, "Block"))
         {
             hspeed = 0;
             vspeed = 0;
