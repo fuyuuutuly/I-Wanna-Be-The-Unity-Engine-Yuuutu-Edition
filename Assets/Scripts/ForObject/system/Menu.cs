@@ -17,7 +17,6 @@ public class Menu : MonoBehaviour
     private Text[] timeText = new Text[3];
 
     public string nextScene;
-    public PlayerInput playerInput;
 
     private void Start()
     {
@@ -33,8 +32,8 @@ public class Menu : MonoBehaviour
             if (!File.Exists($"Data/save{i + 1}"))
             {
                 difficultyText[i].text = "No Data";
-                deathsText[i].text = $"Deaths: 0";
-                timeText[i].text = $"Time: 0:00:00";
+                deathsText[i].text = $"";
+                timeText[i].text = $"";
             }
             else
             {
@@ -50,13 +49,13 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
-        if (playerInput.currentActionMap["Right"].WasPressedThisFrame())
+        if (World.instance.KeyRight.WasPressedThisFrame())
         {
             select++;
             if (select == 3)
                 select = 0;
         }
-        if (playerInput.currentActionMap["Left"].WasPressedThisFrame())
+        if (World.instance.KeyLeft.WasPressedThisFrame())
         {
             select--;
             if (select == -1)
