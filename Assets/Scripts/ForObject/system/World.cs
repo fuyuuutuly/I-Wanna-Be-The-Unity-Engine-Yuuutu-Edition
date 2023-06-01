@@ -47,6 +47,7 @@ public class World : Singleton<World>
 
     // I'm using PlayerInput because if I try to use the arrow keys on the keyboard directly, the gamepad stops responding.
     // * Also, when using GetKey, it becomes unable to obtain correct values during restart or scene transitions.
+
     public InputAction KeyLeft
     {
         get { return playerInput.currentActionMap["Left"]; }
@@ -85,6 +86,11 @@ public class World : Singleton<World>
 
     private void Update()
     {
+        //Debug.Log(playerInput);
+        //Debug.Log(playerInput.currentActionMap);
+        //keyLeft = playerInput.currentActionMap["Left"];
+        //keyRight = playerInput.currentActionMap["Right"];
+
         if (gameStarted)
         {
             // Restart Game

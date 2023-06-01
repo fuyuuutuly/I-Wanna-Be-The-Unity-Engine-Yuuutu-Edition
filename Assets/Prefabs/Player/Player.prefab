@@ -141,7 +141,6 @@ GameObject:
   - component: {fileID: 3058102049328234408}
   - component: {fileID: 6394834811989796355}
   - component: {fileID: 1058181172341888765}
-  - component: {fileID: -659205331767770409}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -236,7 +235,6 @@ MonoBehaviour:
   world: {fileID: 7254145588837832267, guid: 2a2d45928414c1e429b2adf664983a4c, type: 3}
   bloodEmitter: {fileID: 3852221451958636710, guid: fb3e764332f17b4469bd770c78c2a0f5, type: 3}
   bullet: {fileID: 4439588096446970192, guid: d9d8ecf2b7154934b94821385dfff307, type: 3}
-  playerInput: {fileID: -659205331767770409}
   jumpSound: {fileID: 9066045787296651755}
   djumpSound: {fileID: 3058102049328234408}
   shootSound: {fileID: 6394834811989796355}
@@ -638,33 +636,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-659205331767770409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7940218150493441220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: dbcb53d052c6c1d4cb0873a736ee325b, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Arrow
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}

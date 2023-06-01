@@ -5,16 +5,16 @@ using UnityEngine;
 public class Water : MonoBehaviour
 {
     public bool refreshDoubleJump = false;
-    PixelPerfectCollider collider;
+    private PixelPerfectCollider PixCollider;
 
     private void Start()
     {
-        collider = GetComponent<PixelPerfectCollider>();
+        PixCollider = GetComponent<PixelPerfectCollider>();
     }
 
     private void Update()
     {
-        var col = collider.InstancePlace(transform.position.x, transform.position.y, "Player");
+        var col = PixCollider.InstancePlace(transform.position.x, transform.position.y, "Player");
         if (col != null)
         {
             var player = col.GetComponent<Player>();

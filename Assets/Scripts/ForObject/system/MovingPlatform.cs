@@ -11,11 +11,11 @@ public class MovingPlatform : MonoBehaviour
 
     public float yspeed = 0;
 
-    PixelPerfectCollider collider;
+    private PixelPerfectCollider PixCollider;
 
     private void Start()
     {
-        collider = GetComponent<PixelPerfectCollider>();
+        PixCollider = GetComponent<PixelPerfectCollider>();
     }
 
     private void Update()
@@ -24,12 +24,12 @@ public class MovingPlatform : MonoBehaviour
         {
             if (bounce)
             {
-                if (collider.PlaceMeeting(transform.position.x + hspeed, transform.position.y, "Block"))
+                if (PixCollider.PlaceMeeting(transform.position.x + hspeed, transform.position.y, "Block"))
                 {
                     hspeed = -hspeed;
                 }
 
-                if (collider.PlaceMeeting(transform.position.x, transform.position.y + vspeed + yspeed, "Block"))
+                if (PixCollider.PlaceMeeting(transform.position.x, transform.position.y + vspeed + yspeed, "Block"))
                 {
                     if (vspeed != 0)
                     {
@@ -44,7 +44,7 @@ public class MovingPlatform : MonoBehaviour
                 }
             }
 
-            var col = collider.InstancePlace(transform.position.x, transform.position.y + 2, "Player");
+            var col = PixCollider.InstancePlace(transform.position.x, transform.position.y + 2, "Player");
             if (col != null)
             {
                 var p = col.GetComponent<Player>();

@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Save : MonoBehaviour
 {
-    bool canSave = true;
-    PixelPerfectCollider collider;
-    SpriteAnimator animtor;
-    int timer = -1;
+    private bool canSave = true;
+    private PixelPerfectCollider PixCollider;
+    private SpriteAnimator animtor;
+    private int timer = -1;
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class Save : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        collider = GetComponent<PixelPerfectCollider>();
+        PixCollider = GetComponent<PixelPerfectCollider>();
         animtor = GetComponent<SpriteAnimator>();
 
         animtor.onAnimationEnd = OnAnimationEnd;
@@ -25,14 +25,14 @@ public class Save : MonoBehaviour
 
     private void Update()
     {
-        if (collider.PlaceMeeting(transform.position.x, transform.position.y, "Player"))
+        if (PixCollider.PlaceMeeting(transform.position.x, transform.position.y, "Player"))
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 OnSave();
             }
         }
-        if (collider.PlaceMeeting(transform.position.x, transform.position.y, "Bullet"))
+        if (PixCollider.PlaceMeeting(transform.position.x, transform.position.y, "Bullet"))
         {
             OnSave();
         }
@@ -46,7 +46,7 @@ public class Save : MonoBehaviour
         }
     }
 
-    void OnSave()
+    private void OnSave()
     {
         if (canSave)
         {
@@ -62,7 +62,7 @@ public class Save : MonoBehaviour
         }
     }
 
-    void OnAnimationEnd()
+    private void OnAnimationEnd()
     {
         animtor.imageSpeed = animtor.imageIndex = 0;
     }

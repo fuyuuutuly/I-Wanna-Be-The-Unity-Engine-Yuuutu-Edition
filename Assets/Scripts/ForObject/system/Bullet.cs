@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    int timer = 40;
-    float hspeed = 16;
-    float xscale;
-    PixelPerfectCollider collider;
+    private int timer = 40;
+    private float hspeed = 16;
+    private float xscale;
+    private PixelPerfectCollider PixCollider;
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
             if (i.gameObject.name == "Sprite")
                 xscale = i.localScale.x;
         }
-        collider = GetComponent<PixelPerfectCollider>();
+        PixCollider = GetComponent<PixelPerfectCollider>();
     }
 
     private void Update()
@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
         }
 
         transform.position += new Vector3(hspeed * xscale, 0);
-        if (collider.PlaceMeeting(transform.position.x, transform.position.y, "Block"))
+        if (PixCollider.PlaceMeeting(transform.position.x, transform.position.y, "Block"))
         {
             Destroy(gameObject);
         }

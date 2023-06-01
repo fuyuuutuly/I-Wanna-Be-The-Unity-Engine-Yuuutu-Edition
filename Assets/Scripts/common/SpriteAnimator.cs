@@ -11,7 +11,7 @@ public class SpriteAnimator : MonoBehaviour
 
     public string startAnimation = "Default";
 
-    string _currentAnimation;
+    private string _currentAnimation;
 
     public string currentAnimation
     {
@@ -36,9 +36,10 @@ public class SpriteAnimator : MonoBehaviour
     public float imageIndex;
 
     public delegate void OnAnimationEnd();
+
     public OnAnimationEnd onAnimationEnd;
 
-    SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
 
     private void Start()
     {
@@ -67,5 +68,3 @@ public class SpriteAnimation
     public string name;
     public Sprite[] sprites;
 }
-
-

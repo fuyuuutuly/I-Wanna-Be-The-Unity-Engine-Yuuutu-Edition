@@ -68,8 +68,24 @@ MonoBehaviour:
   deathSound: {fileID: 110343573212235999}
   isEnableDeathMusic: 1
   deathMusic: {fileID: 5131086998306480182}
-  stateKeyLeft: 0
-  stateKeyRight: 0
+  keyRight:
+    m_Name: Key Right
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 69d9b2a9-19bb-4b75-a3d5-d75d58ecc24b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  keyLeft:
+    m_Name: Key Left
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 21aa9205-5b3c-4227-85fd-8b7598113c60
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!82 &8827961560328443830
 AudioSource:
   m_ObjectHideFlags: 0
@@ -392,7 +408,7 @@ MonoBehaviour:
     m_ActionId: 51cde5f9-6e03-464e-a4fc-2206402c88a8
     m_ActionName: Player/Left[/Keyboard/leftArrow]
   m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: Keyb
-  m_DefaultActionMap: Player
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Arrow
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

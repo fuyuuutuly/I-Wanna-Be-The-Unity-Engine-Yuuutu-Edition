@@ -34,7 +34,6 @@ public class Player : MonoBehaviour
     private PixelPerfectCollider pixCollider;
     public BloodEmitter bloodEmitter;
     public Bullet bullet;
-    public PlayerInput playerInput;
 
     public AudioSource jumpSound;
     public AudioSource djumpSound;
