@@ -5,17 +5,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Xml;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class Menu : MonoBehaviour
 {
-    int select = 0;
-    Vector3 cursorStart;
+    private int select = 0;
+    private Vector3 cursorStart;
 
-    Text[] difficultyText = new Text[3];
-    Text[] deathsText = new Text[3];
-    Text[] timeText = new Text[3];
+    private Text[] difficultyText = new Text[3];
+    private Text[] deathsText = new Text[3];
+    private Text[] timeText = new Text[3];
 
     public string nextScene;
+    public PlayerInput playerInput;
 
     private void Start()
     {
@@ -46,21 +48,21 @@ public class Menu : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (playerInput.currentActionMap["Right"].WasPressedThisFrame())
         {
             select++;
             if (select == 3)
                 select = 0;
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (playerInput.currentActionMap["Left"].WasPressedThisFrame())
         {
             select--;
             if (select == -1)
                 select = 2;
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.RightShift].wasPressedThisFrame)
         {
             World.instance.savenum = select + 1;
             SceneManager.LoadScene(nextScene);

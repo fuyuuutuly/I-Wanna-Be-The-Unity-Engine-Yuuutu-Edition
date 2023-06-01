@@ -130,13 +130,13 @@ public class Player : MonoBehaviour
             vspeed = Sign(vspeed) * maxVspeed;
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Keyboard.current[Key.Z].wasPressedThisFrame)
             Shoot();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.RightShift].wasPressedThisFrame)
             Jump();
 
-        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+        if (Keyboard.current[Key.LeftShift].wasReleasedThisFrame || Keyboard.current[Key.RightShift].wasReleasedThisFrame)
             VJump();
 
         // Walljumps
@@ -151,9 +151,9 @@ public class Player : MonoBehaviour
             animator.currentAnimation = "Sliding";
             animator.imageSpeed = 0.5f;
 
-            if ((onVineL && Input.GetKeyDown(KeyCode.RightArrow)) || (onVineR && Input.GetKeyDown(KeyCode.LeftArrow)))
+            if ((onVineL && World.instance.KeyRight.WasPressedThisFrame()) || (onVineR && World.instance.KeyLeft.WasPressedThisFrame()))
             {
-                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                if (Keyboard.current[Key.LeftShift].isPressed || Keyboard.current[Key.RightShift].isPressed)
                 {
                     if (onVineR)
                         hspeed = -15;
