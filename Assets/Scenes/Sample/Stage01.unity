@@ -1731,6 +1731,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93877a47b25eda94e9300afe2b58323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xScreenMin: -10
+  xScreenMax: 10
+  yScreenMin: -10
+  yScreenMax: 10
+  playerOnCenter: 0
 --- !u!4 &525280456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9003474448311314809, guid: 934e9e7efa1adb7498b24db40298e22c, type: 3}

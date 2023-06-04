@@ -9,6 +9,13 @@ public class PlayerCamera : MonoBehaviour
     private float xStart;
     private float yStart;
 
+    public float xScreenMin = 0;
+    public float xScreenMax = 0;
+    public float yScreenMin = 0;
+    public float yScreenMax = 0;
+
+    public bool playerOnCenter = false;
+
     private void Start()
     {
         PixCamera = GetComponent<PixelPerfectCamera>();
@@ -19,7 +26,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        var player = GameObject.FindObjectOfType<Player>();
+        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (player != null)
         {
             var xFollow = player.x - xStart + PixCamera.refResolutionX / 2;
@@ -28,8 +35,53 @@ public class PlayerCamera : MonoBehaviour
             var width = PixCamera.refResolutionX;
             var height = PixCamera.refResolutionY;
 
-            transform.position = new Vector3(Mathf.Floor(xFollow / width) * width + xStart,
-                Mathf.Floor(yFollow / height) * height + yStart, transform.position.z);
+            float newX, newY;
+            if (playerOnCenter)
+            {
+                newX = player.x;
+                if (newX < xStart + width * xScreenMin)
+                {
+                    newX = xStart + width * xScreenMin;
+                }
+                if (newX > xStart + width * xScreenMax)
+                {
+                    newX = xStart + width * xScreenMax;
+                }
+
+                newY = player.y;
+                if (newY < yStart + height * yScreenMin)
+                {
+                    newY = yStart + height * yScreenMin;
+                }
+                if (newY > yStart + height * yScreenMax)
+                {
+                    newY = yStart + height * yScreenMax;
+                }
+            }
+            else
+            {
+                newX = Mathf.Floor(xFollow / width) * width + xStart;
+                if (newX < xStart + width * xScreenMin)
+                {
+                    newX = xStart + width * xScreenMin;
+                }
+                if (newX > xStart + width * xScreenMax)
+                {
+                    newX = xStart + width * xScreenMax;
+                }
+
+                newY = Mathf.Floor(yFollow / height) * height + yStart;
+                if (newY < yStart + height * yScreenMin)
+                {
+                    newY = yStart + height * yScreenMin;
+                }
+                if (newY > yStart + height * yScreenMax)
+                {
+                    newY = yStart + height * yScreenMax;
+                }
+            }
+
+            transform.position = new Vector3(newX, newY, transform.position.z);
         }
     }
 }
