@@ -5,7 +5,7 @@ using UnityEngine.U2D;
 
 public class PlayerCamera : MonoBehaviour
 {
-    private PixelPerfectCamera PixCamera;
+    private PixelPerfectCamera pixCamera;
     private float xStart;
     private float yStart;
 
@@ -18,7 +18,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        PixCamera = GetComponent<PixelPerfectCamera>();
+        pixCamera = GetComponent<PixelPerfectCamera>();
 
         xStart = transform.position.x;
         yStart = transform.position.y;
@@ -29,11 +29,11 @@ public class PlayerCamera : MonoBehaviour
         var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (player != null)
         {
-            var xFollow = player.x - xStart + PixCamera.refResolutionX / 2;
-            var yFollow = player.y - yStart + PixCamera.refResolutionY / 2;
+            var xFollow = player.x - xStart + pixCamera.refResolutionX / 2;
+            var yFollow = player.y - yStart + pixCamera.refResolutionY / 2;
 
-            var width = PixCamera.refResolutionX;
-            var height = PixCamera.refResolutionY;
+            var width = pixCamera.refResolutionX;
+            var height = pixCamera.refResolutionY;
 
             float newX, newY;
             if (playerOnCenter)

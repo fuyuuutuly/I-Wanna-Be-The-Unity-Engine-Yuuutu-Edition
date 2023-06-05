@@ -21,7 +21,7 @@ public class SpriteAnimator : MonoBehaviour
             foreach (var i in animations)
             {
                 if (i.name == _currentAnimation)
-                    animation = i;
+                    sprAnimation = i;
             }
         }
         get
@@ -30,7 +30,7 @@ public class SpriteAnimator : MonoBehaviour
         }
     }
 
-    public SpriteAnimation animation { get; private set; }
+    public SpriteAnimation sprAnimation { get; private set; }
 
     public float imageSpeed;
     public float imageIndex;
@@ -51,9 +51,9 @@ public class SpriteAnimator : MonoBehaviour
     {
         imageIndex += imageSpeed;
 
-        spriteRenderer.sprite = animation.sprites[(int)imageIndex % animation.sprites.Length];
+        spriteRenderer.sprite = sprAnimation.sprites[(int)imageIndex % sprAnimation.sprites.Length];
 
-        if (imageIndex > animation.sprites.Length)
+        if (imageIndex > sprAnimation.sprites.Length)
         {
             imageIndex -= (int)imageIndex;
             if (onAnimationEnd != null)
