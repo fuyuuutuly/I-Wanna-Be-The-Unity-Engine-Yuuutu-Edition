@@ -67,6 +67,6 @@ public class Menu : MonoBehaviour
             SceneManager.LoadScene(nextScene);
         }
         GameObject cursor = GameObject.Find("Cursor");
-        cursor.transform.position = cursorStart + new Vector3(240f * select, 0);
+        cursor.transform.position = cursorStart + new Vector3(256f * select, 0);
     }
 }
