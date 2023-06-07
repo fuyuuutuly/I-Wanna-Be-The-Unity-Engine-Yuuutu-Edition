@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class TitleMenu : MonoBehaviour
@@ -8,9 +9,9 @@ public class TitleMenu : MonoBehaviour
     [SerializeField]
     private string nextScene;
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.RightShift].wasPressedThisFrame)
         {
             SceneManager.LoadScene(nextScene);
         }

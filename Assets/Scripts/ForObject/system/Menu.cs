@@ -42,7 +42,7 @@ public class Menu : MonoBehaviour
 
                 difficultyText[i].text = saveFile.difficulty.ToString();
                 deathsText[i].text = $"Deaths: {saveFile.death}";
-                timeText[i].text = $"Time: {saveFile.time / 3600}:{saveFile.time / 60 % 60}:{saveFile.time % 60}";
+                timeText[i].text = $"Time: {Utility.SecToTime(saveFile.time)}";
             }
         }
     }
