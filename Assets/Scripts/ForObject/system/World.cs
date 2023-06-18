@@ -10,10 +10,6 @@ using UnityEngine.InputSystem;
 // World singleton helps us manage the game
 public class World : Singleton<World>
 {
-    public string roomCaption = "I Wanna Be The Unity Engine";
-
-    private WindowCaption windowCaption = new();
-
     public string startScene = "Stage01";
 
     [ReadOnly] public int savenum = 1;
@@ -70,10 +66,24 @@ public class World : Singleton<World>
 
     private PlayerInput playerInput;
 
+    //For Windows
+#if UNITY_STANDALONE_WIN
+
+    [DllImport("user32.dll", EntryPoint = "SetWindowText")]
+    public static extern bool SetWindowText(IntPtr hwnd, string lpString);
+
+    [DllImport("user32.dll", EntryPoint = "FindWindow")]
+    public static extern IntPtr FindWindow(string className, string windowName);
+
+    private IntPtr window;
+#endif
+
     private void Start()
     {
         // Initialize game
-        windowCaption.SetWindowCaption(roomCaption);
+#if UNITY_STANDALONE_WIN
+        window = FindWindow(null, Application.productName);
+#endif
 
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 50;
@@ -86,11 +96,6 @@ public class World : Singleton<World>
 
     private void Update()
     {
-        //Debug.Log(playerInput);
-        //Debug.Log(playerInput.currentActionMap);
-        //keyLeft = playerInput.currentActionMap["Left"];
-        //keyRight = playerInput.currentActionMap["Right"];
-
         if (gameStarted)
         {
             // Restart Game
@@ -106,8 +111,10 @@ public class World : Singleton<World>
             }
 
             // Update title
-            var title = $"{roomCaption} [{difficulty}] SaveData{savenum} [Esc]:End Death:{death} Time:{Utility.SecToTime(time)}";
-            windowCaption.SetWindowCaption(title);
+#if UNITY_STANDALONE_WIN
+            var title = $"{ Application.productName} [{difficulty}] SaveData{savenum} [Esc]:End Death:{death} Time:{Utility.SecToTime(time)}";
+            SetWindowText(window, title);
+#endif
         }
 
         // End Game
@@ -126,6 +133,9 @@ public class World : Singleton<World>
             var player = GameObject.FindWithTag("Player");
             Destroy(player);
             Destroy(gameObject);
+#if UNITY_STANDALONE_WIN
+            SetWindowText(window, Application.productName);
+#endif
             SceneManager.LoadScene("Title");
         }
     }
@@ -230,45 +240,6 @@ public class World : Singleton<World>
                 time++;
             }
         }
-    }
-}
-
-internal class WindowCaption
-{
-    private delegate bool EnumWindowsCallBack(IntPtr hwnd, IntPtr lParam);
-
-    [DllImport("user32", CharSet = CharSet.Unicode)]
-    private static extern bool SetWindowTextW(IntPtr hwnd, string title);
-
-    [DllImport("user32")]
-    private static extern int EnumWindows(EnumWindowsCallBack lpEnumFunc, IntPtr lParam);
-
-    [DllImport("user32")]
-    private static extern uint GetWindowThreadProcessId(IntPtr hWnd, ref IntPtr lpdwProcessId);
-
-    private IntPtr windowHandle;
-
-    public WindowCaption()
-    {
-        IntPtr handle = (IntPtr)System.Diagnostics.Process.GetCurrentProcess().Id;
-        EnumWindows(new EnumWindowsCallBack(EnumWindCallback), handle);
-    }
-
-    public void SetWindowCaption(string caption)
-    {
-        SetWindowTextW(windowHandle, caption);
-    }
-
-    private bool EnumWindCallback(IntPtr hwnd, IntPtr lParam)
-    {
-        IntPtr pid = IntPtr.Zero;
-        GetWindowThreadProcessId(hwnd, ref pid);
-        if (pid == lParam)
-        {
-            windowHandle = hwnd;
-            return true;
-        }
-        return false;
     }
 }
 

@@ -26,7 +26,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        var player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<Player>();
         if (player != null)
         {
             var xFollow = player.x - xStart + pixCamera.refResolutionX / 2;
