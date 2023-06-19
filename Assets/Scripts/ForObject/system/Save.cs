@@ -5,22 +5,28 @@ using UnityEngine;
 
 public class Save : MonoBehaviour
 {
+    public Difficulty displayDifficulty;
     private bool canSave = true;
     private PixelPerfectCollider PixCollider;
-    private SpriteAnimator animtor;
+    private SpriteAnimator animator;
     private int timer = -1;
 
     private void Start()
     {
-        if ((int)World.instance.difficulty > (int)Difficulty.Hard)
+        if ((int)World.instance.difficulty > (int)displayDifficulty)
         {
             Destroy(gameObject);
             return;
         }
         PixCollider = GetComponent<PixelPerfectCollider>();
-        animtor = GetComponent<SpriteAnimator>();
+        animator = GetComponent<SpriteAnimator>();
 
-        animtor.onAnimationEnd = OnAnimationEnd;
+        if (displayDifficulty == Difficulty.Medium)
+        {
+            animator.currentAnimation = "Medium";
+        }
+
+        animator.onAnimationEnd = OnAnimationEnd;
     }
 
     private void Update()
@@ -54,8 +60,8 @@ public class Save : MonoBehaviour
             if (player != null)
             {
                 canSave = false;
-                animtor.imageIndex = 1;
-                animtor.imageSpeed = 0.017f;
+                animator.imageIndex = 1;
+                animator.imageSpeed = 0.017f;
                 timer = 30;
                 World.instance.SaveGame(true);
             }
@@ -64,6 +70,6 @@ public class Save : MonoBehaviour
 
     private void OnAnimationEnd()
     {
-        animtor.imageSpeed = animtor.imageIndex = 0;
+        animator.imageSpeed = animator.imageIndex = 0;
     }
 }
