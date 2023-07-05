@@ -61,7 +61,7 @@ public class Menu : MonoBehaviour
             if (select == -1)
                 select = 2;
         }
-        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.RightShift].wasPressedThisFrame)
+        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame)
         {
             World.instance.savenum = select + 1;
             SceneManager.LoadScene(nextScene);

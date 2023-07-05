@@ -34,6 +34,6 @@ public class Blood : MonoBehaviour
             return;
         }
 
-        transform.position = new Vector3(x, y);
+        transform.position = new Vector2(x, y);
     }
 }

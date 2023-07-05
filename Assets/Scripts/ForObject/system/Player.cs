@@ -133,10 +133,10 @@ public class Player : MonoBehaviour
         if (Keyboard.current[Key.Z].wasPressedThisFrame)
             Shoot();
 
-        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.RightShift].wasPressedThisFrame)
+        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame)
             Jump();
 
-        if (Keyboard.current[Key.LeftShift].wasReleasedThisFrame || Keyboard.current[Key.RightShift].wasReleasedThisFrame)
+        if (Keyboard.current[Key.LeftShift].wasReleasedThisFrame)
             VJump();
 
         // Walljumps
@@ -153,7 +153,7 @@ public class Player : MonoBehaviour
 
             if ((onVineL && World.instance.KeyRight.WasPressedThisFrame()) || (onVineR && World.instance.KeyLeft.WasPressedThisFrame()))
             {
-                if (Keyboard.current[Key.LeftShift].isPressed || Keyboard.current[Key.RightShift].isPressed)
+                if (Keyboard.current[Key.LeftShift].isPressed)
                 {
                     if (onVineR)
                         hspeed = -15;
@@ -242,10 +242,12 @@ public class Player : MonoBehaviour
         // Killer check
         if (pixCollider.PlaceMeeting(x, y, "Killer"))
         {
-            var inst = Instantiate(bloodEmitter);
-            inst.transform.position = transform.position;
-            Destroy(gameObject);
-            World.instance.KillPlayer();
+            Death();
+        }
+
+        if (Keyboard.current[Key.Q].wasPressedThisFrame)
+        {
+            Death();
         }
 
         // Update position
@@ -289,5 +291,13 @@ public class Player : MonoBehaviour
             inst.transform.position = new Vector3(x, y);
             shootSound.Play();
         }
+    }
+
+    public void Death()
+    {
+        var inst = Instantiate(bloodEmitter);
+        inst.transform.position = transform.position;
+        Destroy(gameObject);
+        World.instance.KillPlayer();
     }
 }
