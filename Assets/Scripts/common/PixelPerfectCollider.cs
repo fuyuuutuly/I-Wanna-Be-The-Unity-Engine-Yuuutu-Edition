@@ -8,35 +8,93 @@ using static UnityEngine.Mathf;
 
 public class PixelPerfectCollider : MonoBehaviour
 {
-    MaskData maskData;
-    SpriteRenderer maskRenderer;
 
-    int left { get => maskData.left; }
-    int right { get => maskData.right; }
-    int top { get => maskData.top; }
-    int bottom { get => maskData.bottom; }
 
-    bool[] boolData { get => maskData.boolData; }
+    private MaskData maskData;
+    private SpriteRenderer maskRenderer;
 
-    int width { get => maskData.width; }
-    int height { get => maskData.height; }
+    private int left { get => maskData.left; }
+    private int right { get => maskData.right; }
+    private int top { get => maskData.top; }
+    private int bottom { get => maskData.bottom; }
 
-    float xPos { get => gameObject.transform.position.x; }
-    float yPos { get => gameObject.transform.position.y; }
+    private bool[] boolData { get => maskData.boolData; }
 
-    int xPivot { get => (int)(maskRenderer.sprite.pivot.x); }
-    int yPivot { get => (int)(maskRenderer.sprite.pivot.y); }
+    private int width { get => maskData.width; }
+    private int height { get => maskData.height; }
 
-    float xScale { get => gameObject.transform.localScale.x; }
-    float yScale { get => gameObject.transform.localScale.y; }
+    private float xPos { get => _transform.position.x; }
+    private float yPos { get => _transform.position.y; }
 
-    float rotation { get => gameObject.transform.rotation.eulerAngles.z; }
+    private int xPivot { get => (int)(maskRenderer.sprite.pivot.x); }
+    private int yPivot { get => (int)(maskRenderer.sprite.pivot.y); }
+
+    private float xScale
+    {
+        get
+        {
+            if (!enableChangeScale)
+            {
+                return xScaleStart;
+            }
+            else
+            {
+                return _transform.localScale.x;
+            }
+        }
+    }
+
+    private float xScaleStart;
+
+    private float yScale
+    {
+        get
+        {
+            if (!enableChangeScale)
+            {
+                return yScaleStart;
+            }
+            else
+            {
+                return _transform.localScale.y;
+            }
+        }
+    }
+
+    private float yScaleStart;
+
+    private float rotation
+    {
+        get
+        {
+            if (!enableChangeRotation)
+            {
+                return rotationStart;
+            }
+            else
+            {
+                return _transform.rotation.eulerAngles.z;
+            }
+        }
+    }
+
+    private float rotationStart;
+
+    private Transform _transform;
 
     public bool enableSpriteAnimator = false;
-    SpriteAnimator animator;
+    public bool enableChangeScale = false;
+    public bool enableChangeRotation = false;
+    private SpriteAnimator animator;
 
-    void Start()
+    private void Start()
     {
+        _transform = transform;
+
+        xScaleStart = _transform.localScale.x;
+        yScaleStart = _transform.localScale.y;
+        rotationStart = _transform.rotation.eulerAngles.z;
+
         maskRenderer = GetComponent<SpriteRenderer>();
         var texture = maskRenderer.sprite.texture;
 
@@ -208,7 +266,7 @@ public class PixelPerfectCollider : MonoBehaviour
         return null;
     }
 
-    static void GetBoundingBox(int left, int right, int top, int bottom, out int left1, out int right1, out int top1, out int bottom1,
+    private static void GetBoundingBox(int left, int right, int top, int bottom, out int left1, out int right1, out int top1, out int bottom1,
         float x, float y, float xscale, float yscale, float angle)
     {
         if (angle == 0)
@@ -251,7 +309,7 @@ public class PixelPerfectCollider : MonoBehaviour
         }
     }
 
-    static void RotateAround(float xs, float ys, float xo, float yo, float sina, float cosa, out float ox, out float oy)
+    private static void RotateAround(float xs, float ys, float xo, float yo, float sina, float cosa, out float ox, out float oy)
     {
         ox = (xs - xo) * cosa - (ys - yo) * sina + xo;
         oy = (xs - xo) * sina + (ys - yo) * cosa + yo;
@@ -337,9 +395,8 @@ public class PixelPerfectCollider : MonoBehaviour
         return maskData;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         World.instance.colliders[gameObject.tag].Remove(this);
     }
 }
-
