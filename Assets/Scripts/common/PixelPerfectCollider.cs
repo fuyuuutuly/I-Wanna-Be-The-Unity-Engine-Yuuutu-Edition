@@ -8,8 +8,6 @@ using static UnityEngine.Mathf;
 
 public class PixelPerfectCollider : MonoBehaviour
 {
-
-
     private MaskData maskData;
     private SpriteRenderer maskRenderer;
 
@@ -399,4 +397,17 @@ public class PixelPerfectCollider : MonoBehaviour
     {
         World.instance.colliders[gameObject.tag].Remove(this);
     }
+}
+
+public class MaskData
+{
+    public int left;
+    public int right;
+    public int top;
+    public int bottom;
+
+    public int width;
+    public int height;
+
+    public bool[] boolData;
 }

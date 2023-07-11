@@ -242,24 +242,3 @@ public class World : Singleton<World>
         }
     }
 }
-
-public class MaskData
-{
-    public int left;
-    public int right;
-    public int top;
-    public int bottom;
-
-    public int width;
-    public int height;
-
-    public bool[] boolData;
-}
-
-internal enum KeyState
-{
-    IsPressed,
-    IsReleased,
-    WasPressedThisFrame,
-    WasReleasedThisFrame
-}
