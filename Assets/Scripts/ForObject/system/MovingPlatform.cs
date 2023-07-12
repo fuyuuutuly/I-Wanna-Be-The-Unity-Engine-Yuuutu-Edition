@@ -49,10 +49,10 @@ public class MovingPlatform : MonoBehaviour
             {
                 var p = col.GetComponent<Player>();
 
-                p.y += vspeed + yspeed;
+                p.Y += vspeed + yspeed;
                 if (!p.GetComponent<PixelPerfectCollider>().PlaceMeeting(p.transform.position.x + hspeed, p.transform.position.y, "Block"))
                 {
-                    p.x += hspeed;
+                    p.X += hspeed;
                 }
             }
 

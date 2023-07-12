@@ -29,8 +29,8 @@ public class PlayerCamera : MonoBehaviour
         var player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<Player>();
         if (player != null)
         {
-            var xFollow = player.x - xStart + pixCamera.refResolutionX / 2;
-            var yFollow = player.y - yStart + pixCamera.refResolutionY / 2;
+            var xFollow = player.X - xStart + pixCamera.refResolutionX / 2;
+            var yFollow = player.Y - yStart + pixCamera.refResolutionY / 2;
 
             var width = pixCamera.refResolutionX;
             var height = pixCamera.refResolutionY;
@@ -38,7 +38,7 @@ public class PlayerCamera : MonoBehaviour
             float newX, newY;
             if (playerOnCenter)
             {
-                newX = player.x;
+                newX = player.X;
                 if (newX < xStart + width * xScreenMin)
                 {
                     newX = xStart + width * xScreenMin;
@@ -48,7 +48,7 @@ public class PlayerCamera : MonoBehaviour
                     newX = xStart + width * xScreenMax;
                 }
 
-                newY = player.y;
+                newY = player.Y;
                 if (newY < yStart + height * yScreenMin)
                 {
                     newY = yStart + height * yScreenMin;

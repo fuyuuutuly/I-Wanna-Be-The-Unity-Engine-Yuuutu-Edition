@@ -21,8 +21,8 @@ public class Player : MonoBehaviour
     [ReadOnly] public float vspeed = 0;
     private float gravity = -0.4f;
 
-    public float x { get => _transform.position.x; set => _transform.position = new Vector3(value, y, _transform.position.z); }
-    public float y { get => _transform.position.y; set => _transform.position = new Vector3(x, value, _transform.position.z); }
+    public float X { get => _transform.position.x; set => _transform.position = new Vector3(value, Y, _transform.position.z); }
+    public float Y { get => _transform.position.y; set => _transform.position = new Vector3(X, value, _transform.position.z); }
 
     private float xprevious;
     private float yprevious;
@@ -75,8 +75,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        xprevious = x;
-        yprevious = y;
+        xprevious = X;
+        yprevious = Y;
 
         var L = World.instance.KeyLeft.IsPressed();
         var R = World.instance.KeyRight.IsPressed();
@@ -88,9 +88,9 @@ public class Player : MonoBehaviour
         else if (L)
             h = -1;
 
-        var notOnBlock = !pixCollider.PlaceMeeting(x, y - 1, "Block");
-        var onVineL = pixCollider.PlaceMeeting(x - 1, y, "WalljumpL") && notOnBlock;
-        var onVineR = pixCollider.PlaceMeeting(x + 1, y, "WalljumpR") && notOnBlock;
+        var notOnBlock = !pixCollider.PlaceMeeting(X, Y - 1, "Block");
+        var onVineL = pixCollider.PlaceMeeting(X - 1, Y, "WalljumpL") && notOnBlock;
+        var onVineR = pixCollider.PlaceMeeting(X + 1, Y, "WalljumpR") && notOnBlock;
 
         if (h != 0)
         {
@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (!pixCollider.PlaceMeeting(x, y - 4, "Platform"))
+            if (!pixCollider.PlaceMeeting(X, Y - 4, "Platform"))
             {
                 onPlatform = false;
             }
@@ -182,24 +182,24 @@ public class Player : MonoBehaviour
 
         // Move
         vspeed += gravity;
-        x += hspeed;
-        y += vspeed;
+        X += hspeed;
+        Y += vspeed;
 
         // Collision
 
         // Block check
-        if (pixCollider.PlaceMeeting(x, y, "Block"))
+        if (pixCollider.PlaceMeeting(X, Y, "Block"))
         {
-            x = xprevious;
-            y = yprevious;
+            X = xprevious;
+            Y = yprevious;
 
-            if (pixCollider.PlaceMeeting(x + hspeed, y, "Block"))
+            if (pixCollider.PlaceMeeting(X + hspeed, Y, "Block"))
             {
                 pixCollider.MoveContactX(hspeed, "Block");
                 hspeed = 0;
             }
 
-            if (pixCollider.PlaceMeeting(x, y + vspeed, "Block"))
+            if (pixCollider.PlaceMeeting(X, Y + vspeed, "Block"))
             {
                 pixCollider.MoveContactY(vspeed, "Block");
 
@@ -210,30 +210,30 @@ public class Player : MonoBehaviour
                 vspeed = 0;
             }
 
-            if (pixCollider.PlaceMeeting(x + hspeed, y + vspeed, "Block"))
+            if (pixCollider.PlaceMeeting(X + hspeed, Y + vspeed, "Block"))
             {
                 hspeed = 0;
             }
 
-            x += hspeed;
-            y += vspeed;
-            if (pixCollider.PlaceMeeting(x, y, "Block"))
+            X += hspeed;
+            Y += vspeed;
+            if (pixCollider.PlaceMeeting(X, Y, "Block"))
             {
-                x = xprevious;
-                y = yprevious;
+                X = xprevious;
+                Y = yprevious;
             }
         }
 
         // Platform check
-        var platform = pixCollider.InstancePlace(x, y, "Platform");
+        var platform = pixCollider.InstancePlace(X, Y, "Platform");
         if (platform != null)
         {
-            if (y - vspeed / 2 >= platform.transform.position.y)
+            if (Y - vspeed / 2 >= platform.transform.position.y)
             {
                 var vsp = platform.GetComponent<MovingPlatform>().vspeed;
                 if (vsp <= 0)
                 {
-                    y = platform.transform.position.y + 9;
+                    Y = platform.transform.position.y + 9;
                     vspeed = vsp;
                 }
                 onPlatform = true;
@@ -242,7 +242,7 @@ public class Player : MonoBehaviour
         }
 
         // Killer check
-        if (pixCollider.PlaceMeeting(x, y, "Killer"))
+        if (pixCollider.PlaceMeeting(X, Y, "Killer"))
         {
             Death();
         }
@@ -253,26 +253,26 @@ public class Player : MonoBehaviour
         }
 
         // Update position
-        _transform.position = new Vector3(x, y);
+        _transform.position = new Vector3(X, Y);
     }
 
     private void Jump()
     {
-        if (pixCollider.PlaceMeeting(x, y - 1, "Block") || pixCollider.PlaceMeeting(x, y - 1, "Platform") || onPlatform
-            || pixCollider.PlaceMeeting(x, y - 1, "Water"))
+        if (pixCollider.PlaceMeeting(X, Y - 1, "Block") || pixCollider.PlaceMeeting(X, Y - 1, "Platform") || onPlatform
+            || pixCollider.PlaceMeeting(X, Y - 1, "Water"))
         {
             vspeed = -jump;
             djump = true;
             jumpSound.Play();
         }
-        else if (djump || pixCollider.PlaceMeeting(x, y - 1, "Water2"))
+        else if (djump || pixCollider.PlaceMeeting(X, Y - 1, "Water2"))
         {
             animator.currentAnimation = "Jump";
             vspeed = -jump2;
             djump = false;
             djumpSound.Play();
 
-            if (!pixCollider.PlaceMeeting(x, y - 1, "Water3"))
+            if (!pixCollider.PlaceMeeting(X, Y - 1, "Water3"))
                 djump = false;
             else
                 djump = true;
@@ -290,7 +290,7 @@ public class Player : MonoBehaviour
         if (FindObjectsOfType<Bullet>().Length < 4)
         {
             var inst = Instantiate(bullet);
-            inst.transform.position = new Vector2(x, y);
+            inst.transform.position = new Vector2(X, Y);
             shootSound.Play();
         }
     }
@@ -298,7 +298,7 @@ public class Player : MonoBehaviour
     public void Death()
     {
         var inst = Instantiate(bloodEmitter);
-        inst.transform.position = new Vector2(x, y);
+        inst.transform.position = new Vector2(X, Y);
         Destroy(gameObject);
         World.instance.KillPlayer();
     }
