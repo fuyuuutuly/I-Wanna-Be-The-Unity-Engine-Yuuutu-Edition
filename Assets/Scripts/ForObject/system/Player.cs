@@ -195,13 +195,13 @@ public class Player : MonoBehaviour
 
             if (pixCollider.PlaceMeeting(x + hspeed, y, "Block"))
             {
-                pixCollider.MoveContactX(_transform, hspeed, "Block");
+                pixCollider.MoveContactX(hspeed, "Block");
                 hspeed = 0;
             }
 
             if (pixCollider.PlaceMeeting(x, y + vspeed, "Block"))
             {
-                pixCollider.MoveContactY(_transform, vspeed, "Block");
+                pixCollider.MoveContactY(vspeed, "Block");
 
                 if (vspeed < 0)
                 {

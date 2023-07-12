@@ -153,10 +153,10 @@ public class PixelPerfectCollider : MonoBehaviour
         return InstancePlace(x, y, tag) != null;
     }
 
-    public void MoveContactX(Transform transform, float maxX, string tag)
+    public void MoveContactX(float maxX, string tag)
     {
-        float x = transform.position.x;
-        float y = transform.position.y;
+        float x = _transform.position.x;
+        float y = _transform.position.y;
         if (maxX > 0)
         {
             for (int i = 1; i <= maxX; i++)
@@ -180,13 +180,13 @@ public class PixelPerfectCollider : MonoBehaviour
             }
         }
 
-        transform.position = new Vector2(x, y);
+        _transform.position = new Vector2(x, y);
     }
 
-    public void MoveContactY(Transform transform, float maxY, string tag)
+    public void MoveContactY(float maxY, string tag)
     {
-        float x = transform.position.x;
-        float y = transform.position.y;
+        float x = _transform.position.x;
+        float y = _transform.position.y;
         if (maxY > 0)
         {
             for (int i = 1; i <= maxY; i++)
@@ -210,7 +210,7 @@ public class PixelPerfectCollider : MonoBehaviour
             }
         }
 
-        transform.position = new Vector2(x, y);
+        _transform.position = new Vector2(x, y);
     }
 
     public GameObject InstancePlace(float x, float y, string tag)
