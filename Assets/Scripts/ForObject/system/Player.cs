@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    private Transform _transform;
+
     private float jump = -8.5f;
     private float jump2 = -7;
     private float maxSpeed = 3;
@@ -19,8 +21,8 @@ public class Player : MonoBehaviour
     [ReadOnly] public float vspeed = 0;
     private float gravity = -0.4f;
 
-    public float x { get => transform.position.x; set => transform.position = new Vector3(value, y, transform.position.z); }
-    public float y { get => transform.position.y; set => transform.position = new Vector3(x, value, transform.position.z); }
+    public float x { get => _transform.position.x; set => _transform.position = new Vector3(value, y, _transform.position.z); }
+    public float y { get => _transform.position.y; set => _transform.position = new Vector3(x, value, _transform.position.z); }
 
     private float xprevious;
     private float yprevious;
@@ -60,6 +62,7 @@ public class Player : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
+        _transform = transform;
         pixCollider = GetComponent<PixelPerfectCollider>();
         animator = sprite.GetComponent<SpriteAnimator>();
 
@@ -192,13 +195,13 @@ public class Player : MonoBehaviour
 
             if (pixCollider.PlaceMeeting(x + hspeed, y, "Block"))
             {
-                pixCollider.MoveContactX(transform, hspeed, "Block");
+                pixCollider.MoveContactX(_transform, hspeed, "Block");
                 hspeed = 0;
             }
 
             if (pixCollider.PlaceMeeting(x, y + vspeed, "Block"))
             {
-                pixCollider.MoveContactY(transform, vspeed, "Block");
+                pixCollider.MoveContactY(_transform, vspeed, "Block");
 
                 if (vspeed < 0)
                 {
@@ -250,7 +253,7 @@ public class Player : MonoBehaviour
         }
 
         // Update position
-        transform.position = new Vector3(x, y);
+        _transform.position = new Vector3(x, y);
     }
 
     private void Jump()
@@ -287,7 +290,7 @@ public class Player : MonoBehaviour
         if (FindObjectsOfType<Bullet>().Length < 4)
         {
             var inst = Instantiate(bullet);
-            inst.transform.position = new Vector3(x, y);
+            inst.transform.position = new Vector2(x, y);
             shootSound.Play();
         }
     }
@@ -295,7 +298,7 @@ public class Player : MonoBehaviour
     public void Death()
     {
         var inst = Instantiate(bloodEmitter);
-        inst.transform.position = transform.position;
+        inst.transform.position = new Vector2(x, y);
         Destroy(gameObject);
         World.instance.KillPlayer();
     }
