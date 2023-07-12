@@ -33,6 +33,9 @@ public class Blood : MonoBehaviour
 
             if (pixCollider.PlaceMeeting(x, y, "Block"))
             {
+                pixCollider.MoveContactX(hspeed, "Block");
+                pixCollider.MoveContactY(vspeed, "Block");
+
                 hspeed = 0;
                 vspeed = 0;
                 gravity = 0;

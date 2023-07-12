@@ -270,11 +270,12 @@ public class PixelPerfectCollider : MonoBehaviour
     {
         float x = _transform.position.x;
         float y = _transform.position.y;
+
         if (maxX > 0)
         {
             for (int i = 1; i <= maxX; i++)
             {
-                if (PlaceMeeting(x + i, y, tag))
+                if (PlaceMeeting(x + 1, y, tag))
                 {
                     break;
                 }
@@ -285,7 +286,7 @@ public class PixelPerfectCollider : MonoBehaviour
         {
             for (int i = -1; i >= maxX; i--)
             {
-                if (PlaceMeeting(x + i, y, tag))
+                if (PlaceMeeting(x - 1, y, tag))
                 {
                     break;
                 }
@@ -300,11 +301,12 @@ public class PixelPerfectCollider : MonoBehaviour
     {
         float x = _transform.position.x;
         float y = _transform.position.y;
+
         if (maxY > 0)
         {
             for (int i = 1; i <= maxY; i++)
             {
-                if (PlaceMeeting(x, y + i, tag))
+                if (PlaceMeeting(x, y + 1, tag))
                 {
                     break;
                 }
@@ -315,7 +317,7 @@ public class PixelPerfectCollider : MonoBehaviour
         {
             for (int i = -1; i >= maxY; i--)
             {
-                if (PlaceMeeting(x, y + i, tag))
+                if (PlaceMeeting(x, y - 1, tag))
                 {
                     break;
                 }
