@@ -192,17 +192,16 @@ public class Player : MonoBehaviour
 
             if (pixCollider.PlaceMeeting(x + hspeed, y, "Block"))
             {
-                if (hspeed <= 0) while (!pixCollider.PlaceMeeting(x - 1, y, "Block")) x--;
-                if (hspeed > 0) while (!pixCollider.PlaceMeeting(x + 1, y, "Block")) x++;
+                pixCollider.MoveContactX(transform, hspeed, "Block");
                 hspeed = 0;
             }
 
             if (pixCollider.PlaceMeeting(x, y + vspeed, "Block"))
             {
-                if (vspeed >= 0) while (!pixCollider.PlaceMeeting(x, y + 1, "Block")) y++;
+                pixCollider.MoveContactY(transform, vspeed, "Block");
+
                 if (vspeed < 0)
                 {
-                    while (!pixCollider.PlaceMeeting(x, y - 1, "Block")) y--;
                     djump = true;
                 }
                 vspeed = 0;

@@ -153,6 +153,66 @@ public class PixelPerfectCollider : MonoBehaviour
         return InstancePlace(x, y, tag) != null;
     }
 
+    public void MoveContactX(Transform transform, float maxX, string tag)
+    {
+        float x = transform.position.x;
+        float y = transform.position.y;
+        if (maxX > 0)
+        {
+            for (int i = 1; i <= maxX; i++)
+            {
+                if (PlaceMeeting(x + i, y, tag))
+                {
+                    break;
+                }
+                x++;
+            }
+        }
+        else
+        {
+            for (int i = -1; i >= maxX; i--)
+            {
+                if (PlaceMeeting(x + i, y, tag))
+                {
+                    break;
+                }
+                x--;
+            }
+        }
+
+        transform.position = new Vector2(x, y);
+    }
+
+    public void MoveContactY(Transform transform, float maxY, string tag)
+    {
+        float x = transform.position.x;
+        float y = transform.position.y;
+        if (maxY > 0)
+        {
+            for (int i = 1; i <= maxY; i++)
+            {
+                if (PlaceMeeting(x, y + i, tag))
+                {
+                    break;
+                }
+                y++;
+            }
+        }
+        else
+        {
+            for (int i = -1; i >= maxY; i--)
+            {
+                if (PlaceMeeting(x, y + i, tag))
+                {
+                    break;
+                }
+                y--;
+            }
+        }
+
+        transform.position = new Vector2(x, y);
+    }
+
     public GameObject InstancePlace(float x, float y, string tag)
     {
         if (!World.instance.colliders.ContainsKey(tag))
