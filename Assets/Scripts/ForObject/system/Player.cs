@@ -21,8 +21,45 @@ public class Player : MonoBehaviour
     [ReadOnly] public float vspeed = 0;
     private float gravity = -0.4f;
 
-    public float X { get => _transform.position.x; set => _transform.position = new Vector3(value, Y, _transform.position.z); }
-    public float Y { get => _transform.position.y; set => _transform.position = new Vector3(X, value, _transform.position.z); }
+    public float X
+    {
+        get
+        {
+            if (_transform == null)
+            {
+                _transform = transform;
+            }
+            return _transform.position.x;
+        }
+        set
+        {
+            if (_transform == null)
+            {
+                _transform = transform;
+            }
+            _transform.position = new Vector3(value, Y, _transform.position.z);
+        }
+    }
+
+    public float Y
+    {
+        get
+        {
+            if (_transform == null)
+            {
+                _transform = transform;
+            }
+            return _transform.position.y;
+        }
+        set
+        {
+            if (_transform == null)
+            {
+                _transform = transform;
+            }
+            _transform.position = new Vector3(X, value, _transform.position.z);
+        }
+    }
 
     private float xprevious;
     private float yprevious;
@@ -54,15 +91,15 @@ public class Player : MonoBehaviour
             World.instance.savedScene = SceneManager.GetActiveScene().name;
             World.instance.autosave = true;
         }
-        _transform = transform;
-        pixCollider = GetComponent<PixelPerfectCollider>();
-        animator = sprite.GetComponent<SpriteAnimator>();
     }
 
 #endif
 
     private void Start()
     {
+        _transform = transform;
+        pixCollider = GetComponent<PixelPerfectCollider>();
+        animator = sprite.GetComponent<SpriteAnimator>();
         DontDestroyOnLoad(gameObject);
 
         if (World.instance.autosave)

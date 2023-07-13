@@ -185,6 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpriteAnimator: 0
+  enableChangeScale: 0
+  enableChangeRotation: 0
 --- !u!212 &133549763
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -530,6 +532,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpriteAnimator: 0
+  enableChangeScale: 0
+  enableChangeRotation: 0
 --- !u!212 &497738844
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -710,6 +714,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpriteAnimator: 0
+  enableChangeScale: 0
+  enableChangeRotation: 0
 --- !u!212 &553349743
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -894,6 +900,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpriteAnimator: 0
+  enableChangeScale: 0
+  enableChangeRotation: 0
 --- !u!212 &598434005
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1598,6 +1606,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpriteAnimator: 0
+  enableChangeScale: 0
+  enableChangeRotation: 0
 --- !u!212 &1588066319
 SpriteRenderer:
   m_ObjectHideFlags: 0

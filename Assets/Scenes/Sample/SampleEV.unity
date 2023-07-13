@@ -2097,14 +2097,13 @@ Transform:
   - {fileID: 1842892921}
   - {fileID: 2038409346}
   - {fileID: 2140794421}
-  - {fileID: 1941315444}
-  - {fileID: 848875570}
   - {fileID: 2127556269}
   - {fileID: 656080092}
   - {fileID: 1482678064}
   - {fileID: 709679855}
   - {fileID: 517536415}
   - {fileID: 275639038}
+  - {fileID: 1941315444}
   - {fileID: 128891386}
   - {fileID: 1581073321}
   - {fileID: 573936072}
@@ -2118,6 +2117,7 @@ Transform:
   - {fileID: 1276359683}
   - {fileID: 430802960}
   - {fileID: 1538817375}
+  - {fileID: 848875570}
   - {fileID: 534266715}
   m_Father: {fileID: 1058879998}
   m_RootOrder: 0
@@ -9209,6 +9209,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4127802374297414376, guid: ae1691c6254dde043bbdb274d87ca18c, type: 3}
+      propertyPath: bGMAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e02080a80f84b234eac79a4bcf173e9b, type: 3}
     - target: {fileID: 4127802374297414378, guid: ae1691c6254dde043bbdb274d87ca18c, type: 3}
       propertyPath: m_Name
       value: PlayMusic
