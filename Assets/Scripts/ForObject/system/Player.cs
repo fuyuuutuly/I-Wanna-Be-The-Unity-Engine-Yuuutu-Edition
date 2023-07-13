@@ -54,6 +54,9 @@ public class Player : MonoBehaviour
             World.instance.savedScene = SceneManager.GetActiveScene().name;
             World.instance.autosave = true;
         }
+        _transform = transform;
+        pixCollider = GetComponent<PixelPerfectCollider>();
+        animator = sprite.GetComponent<SpriteAnimator>();
     }
 
 #endif
@@ -61,10 +64,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-
-        _transform = transform;
-        pixCollider = GetComponent<PixelPerfectCollider>();
-        animator = sprite.GetComponent<SpriteAnimator>();
 
         if (World.instance.autosave)
         {
