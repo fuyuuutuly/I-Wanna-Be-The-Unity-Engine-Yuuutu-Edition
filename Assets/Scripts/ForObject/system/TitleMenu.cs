@@ -11,7 +11,7 @@ public class TitleMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame)
+        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.RightShift].wasPressedThisFrame)
         {
             SceneManager.LoadScene(nextScene);
         }

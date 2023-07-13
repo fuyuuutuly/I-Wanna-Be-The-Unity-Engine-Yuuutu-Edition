@@ -136,10 +136,10 @@ public class Player : MonoBehaviour
         if (Keyboard.current[Key.Z].wasPressedThisFrame)
             Shoot();
 
-        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame)
+        if (Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.RightShift].wasPressedThisFrame)
             Jump();
 
-        if (Keyboard.current[Key.LeftShift].wasReleasedThisFrame)
+        if (Keyboard.current[Key.LeftShift].wasReleasedThisFrame || Keyboard.current[Key.RightShift].wasReleasedThisFrame)
             VJump();
 
         // Walljumps
@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
 
             if ((onVineL && World.instance.KeyRight.WasPressedThisFrame()) || (onVineR && World.instance.KeyLeft.WasPressedThisFrame()))
             {
-                if (Keyboard.current[Key.LeftShift].isPressed)
+                if (Keyboard.current[Key.LeftShift].isPressed || Keyboard.current[Key.RightShift].isPressed)
                 {
                     if (onVineR)
                         hspeed = -15;
