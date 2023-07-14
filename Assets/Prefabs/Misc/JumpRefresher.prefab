@@ -101,6 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpriteAnimator: 0
+  enableChangeScale: 0
+  enableChangeRotation: 0
 --- !u!114 &4757855647636141063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,7 +368,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
