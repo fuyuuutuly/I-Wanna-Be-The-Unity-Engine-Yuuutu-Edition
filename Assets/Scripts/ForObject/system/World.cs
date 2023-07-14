@@ -235,7 +235,7 @@ public class World : Singleton<World>
         while (true)
         {
             yield return new WaitForSeconds(1.0f);
-            if (GameObject.FindWithTag("Player"))
+            if (GameObject.FindWithTag("Player") && SceneManager.GetActiveScene().name != "DifficultySelect")
             {
                 time++;
             }
