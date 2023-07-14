@@ -80,6 +80,7 @@ public class World : Singleton<World>
 
     private void Start()
     {
+        Screen.SetResolution(1280, 720, false);
         // Initialize game
 #if UNITY_STANDALONE_WIN
         window = FindWindow(null, Application.productName);
@@ -137,6 +138,15 @@ public class World : Singleton<World>
             SetWindowText(window, Application.productName);
 #endif
             SceneManager.LoadScene("Title");
+        }
+
+        // toggle FullScreen
+        if (Keyboard.current[Key.LeftAlt].isPressed || Keyboard.current[Key.RightAlt].isPressed)
+        {
+            if (Keyboard.current[Key.Enter].wasPressedThisFrame)
+            {
+                Screen.SetResolution(1280, 720, !Screen.fullScreen);
+            }
         }
     }
 
