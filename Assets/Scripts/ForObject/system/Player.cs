@@ -333,9 +333,17 @@ public class Player : MonoBehaviour
 
     public void Death()
     {
-        var inst = Instantiate(bloodEmitter);
-        inst.transform.position = new Vector2(X, Y);
-        Destroy(gameObject);
-        World.instance.KillPlayer();
+        if (SceneManager.GetActiveScene().name != "DifficultySelect")
+        {
+            var inst = Instantiate(bloodEmitter);
+            inst.transform.position = new Vector2(X, Y);
+            Destroy(gameObject);
+            World.instance.KillPlayer();
+        }
+        else
+        {
+            Destroy(gameObject);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }

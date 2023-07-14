@@ -99,7 +99,7 @@ public class World : Singleton<World>
         if (gameStarted)
         {
             // Restart Game
-            if (Keyboard.current[Key.R].wasPressedThisFrame)
+            if (Keyboard.current[Key.R].wasPressedThisFrame && SceneManager.GetActiveScene().name != "DifficultySelect")
             {
                 if (GameObject.FindWithTag("Player"))
                 {
