@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1097980842ff7a44895c1c963bd099f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomCaption: I Wanna Be The Unity Engine
+  titleScene: Title2
   startScene: Stage01
   savenum: 1
   difficulty: 0
@@ -68,24 +68,7 @@ MonoBehaviour:
   deathSound: {fileID: 110343573212235999}
   isEnableDeathMusic: 1
   deathMusic: {fileID: 5131086998306480182}
-  keyRight:
-    m_Name: Key Right
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 69d9b2a9-19bb-4b75-a3d5-d75d58ecc24b
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  keyLeft:
-    m_Name: Key Left
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 21aa9205-5b3c-4227-85fd-8b7598113c60
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  playerInput: {fileID: 1283444824818339167}
 --- !u!82 &8827961560328443830
 AudioSource:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 // World singleton helps us manage the game
 public class World : Singleton<World>
 {
+    public string titleScene = "Title2";
     public string startScene = "Stage01";
 
     [ReadOnly] public int savenum = 1;
@@ -64,7 +65,7 @@ public class World : Singleton<World>
         get { return playerInput.currentActionMap["Down"]; }
     }
 
-    private PlayerInput playerInput;
+    public PlayerInput playerInput;
 
     //For Windows
 #if UNITY_STANDALONE_WIN
@@ -91,8 +92,6 @@ public class World : Singleton<World>
 
         // calculate Time
         StartCoroutine(CalcTime());
-
-        playerInput = GetComponent<PlayerInput>();
     }
 
     private void Update()
@@ -137,7 +136,7 @@ public class World : Singleton<World>
 #if UNITY_STANDALONE_WIN
             SetWindowText(window, Application.productName);
 #endif
-            SceneManager.LoadScene("Title");
+            SceneManager.LoadScene(titleScene);
         }
 
         // toggle FullScreen
