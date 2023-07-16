@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpriteAnimator: 0
+  enableChangeScale: 0
+  enableChangeRotation: 0
 --- !u!114 &5527729294510100422
 MonoBehaviour:
   m_ObjectHideFlags: 0
