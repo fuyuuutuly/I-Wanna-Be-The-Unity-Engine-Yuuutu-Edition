@@ -437,7 +437,6 @@ MonoBehaviour:
   - {fileID: 960243481}
   - {fileID: 173439420}
   - {fileID: 1576524069}
-  nextScene: Stage01
 --- !u!82 &406455092
 AudioSource:
   m_ObjectHideFlags: 0
@@ -912,12 +911,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886636991}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -360, z: 0}
+  m_LocalPosition: {x: 0, y: -360, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &886636993
 ParticleSystemRenderer:
@@ -1075,7 +1074,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.3
-      minScalar: 0.5
+      minScalar: 3.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1126,9 +1125,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 300
-      minScalar: 5
+      minMaxState: 3
+      scalar: 350
+      minScalar: 100
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1243,8 +1242,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 60
-      minScalar: 40
+      scalar: 50
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1825,7 +1824,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 50
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -6361,7 +6360,7 @@ RectTransform:
   - {fileID: 1355806154}
   - {fileID: 406455090}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
