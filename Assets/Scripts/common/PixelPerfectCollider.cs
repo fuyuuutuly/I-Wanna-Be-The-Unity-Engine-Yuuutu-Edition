@@ -215,12 +215,12 @@ public class PixelPerfectCollider : MonoBehaviour
                 {
                     for (int xx = iLeft; xx <= iRight; xx++)
                     {
-                        var px1 = RoundToInt((xx - x1) / XScale + xo1);
-                        var py1 = RoundToInt((yy - y1) / YScale + yo1);
+                        var px1 = FloorToInt((xx - x1) / XScale + xo1);
+                        var py1 = FloorToInt((yy - y1) / YScale + yo1);
                         var p1 = px1 >= 0 && py1 >= 0 && px1 < Width && py1 < Height && BoolData[px1 + py1 * Width];
 
-                        var px2 = RoundToInt((xx - x2) / col.XScale + xo2);
-                        var py2 = RoundToInt((yy - y2) / col.YScale + yo2);
+                        var px2 = FloorToInt((xx - x2) / col.XScale + xo2);
+                        var py2 = FloorToInt((yy - y2) / col.YScale + yo2);
                         var p2 = px2 >= 0 && py2 >= 0 && px2 < col.Width && py2 < col.Height && col.BoolData[px2 + py2 * col.Width];
 
                         if (p1 && p2)
@@ -250,15 +250,15 @@ public class PixelPerfectCollider : MonoBehaviour
                         var lx1 = xx - x1;
                         var ly1 = yy - y1;
                         RotateAround(lx1, ly1, 0, 0, sina1, cosa1, out var lx1a, out var ly1a);
-                        var px1 = RoundToInt(lx1a / XScale + xo1);
-                        var py1 = RoundToInt(ly1a / YScale + yo1);
+                        var px1 = FloorToInt(lx1a / XScale + xo1);
+                        var py1 = FloorToInt(ly1a / YScale + yo1);
                         var p1 = px1 >= 0 && py1 >= 0 && px1 < Width && py1 < Height && BoolData[px1 + py1 * Width];
 
                         var lx2 = xx - x2;
                         var ly2 = yy - y2;
                         RotateAround(lx2, ly2, 0, 0, sina2, cosa2, out var lx2a, out var ly2a);
-                        var px2 = RoundToInt(lx2a / col.XScale + xo2);
-                        var py2 = RoundToInt(ly2a / col.YScale + yo2);
+                        var px2 = FloorToInt(lx2a / col.XScale + xo2);
+                        var py2 = FloorToInt(ly2a / col.YScale + yo2);
                         var p2 = px2 >= 0 && py2 >= 0 && px2 < col.Width && py2 < col.Height && col.BoolData[px2 + py2 * col.Width];
 
                         if (p1 && p2)
