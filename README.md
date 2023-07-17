@@ -8,6 +8,7 @@ thanks.
 This is a Unity I Wanna Be The Guy Fangame engine.
 
 The unity version is 2021.3.24f1.  
+(and I am using CodeMaid in VisualStudio)
 
 Features
 * 1280x720(16:9) compatible
