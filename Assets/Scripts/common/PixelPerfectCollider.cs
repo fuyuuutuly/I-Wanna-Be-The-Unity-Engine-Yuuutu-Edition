@@ -94,18 +94,15 @@ public class PixelPerfectCollider : MonoBehaviour
         rotationStart = _transform.rotation.eulerAngles.z;
 
         maskRenderer = GetComponent<SpriteRenderer>();
-        var texture = maskRenderer.sprite.texture;
+        Texture2D texture = maskRenderer.sprite.texture;
+        Rect rect = maskRenderer.sprite.rect;
 
         // Get mask data
         if (!enableSpriteAnimator)
         {
             if (!World.instance.maskDataManager.ContainsKey(texture))
             {
-                var maskData = GetMaskData(texture);
-                if (gameObject.name == "Block_109")
-                {
-                    Debug.Log(maskData);
-                }
+                var maskData = GetMaskData(texture, rect);
 
                 // Add to mask data manager to ensure we don't load repeatedly
                 World.instance.maskDataManager[texture] = maskData;
@@ -127,7 +124,7 @@ public class PixelPerfectCollider : MonoBehaviour
 
                     if (!World.instance.maskDataManager.ContainsKey(texture))
                     {
-                        var maskData = GetMaskData(texture);
+                        var maskData = GetMaskData(texture, rect);
 
                         // Add to mask data manager to ensure we don't load repeatedly
                         World.instance.maskDataManager[texture] = maskData;
@@ -381,17 +378,22 @@ public class PixelPerfectCollider : MonoBehaviour
         oy = (xs - xo) * sina + (ys - yo) * cosa + yo;
     }
 
-    public MaskData GetMaskData(Texture2D texture)
+    public MaskData GetMaskData(Texture2D texture, Rect rect)
     {
         maskData = new MaskData();
 
+        int rectX = FloorToInt(rect.x);
+        int rectY = FloorToInt(rect.y);
+        int rectWidth = FloorToInt(rect.width);
+        int rectHeight = FloorToInt(rect.height);
+
         // Get bool data
-        var boolData = new bool[texture.width * texture.height];
-        for (var y = 0; y < texture.height; y++)
+        var boolData = new bool[rectWidth * rectHeight];
+        for (var y = 0; y < rectHeight; y++)
         {
-            for (var x = 0; x < texture.width; x++)
+            for (var x = 0; x < rectWidth; x++)
             {
-                boolData[x + y * texture.width] = ((Color32)texture.GetPixel(x, y)).a != 0;
+                boolData[x + y * rectWidth] = ((Color32)texture.GetPixel(x + rectX, y + rectY)).a != 0;
             }
         }
         maskData.boolData = boolData;
@@ -399,11 +401,11 @@ public class PixelPerfectCollider : MonoBehaviour
         // Get relative texture bounding box
 
         // Get bbox bottom
-        for (var y = 0; y < texture.height; y++)
+        for (var y = 0; y < rectHeight; y++)
         {
-            for (var x = 0; x < texture.width; x++)
+            for (var x = 0; x < rectWidth; x++)
             {
-                if (((Color32)texture.GetPixel(x, y)).a != 0)
+                if (((Color32)texture.GetPixel(x + rectX, y + rectY)).a != 0)
                 {
                     maskData.bottom = y - YPivot;
                     goto OutBottom;
@@ -413,11 +415,11 @@ public class PixelPerfectCollider : MonoBehaviour
         OutBottom:
 
         // Get bbox top
-        for (var y = texture.height - 1; y >= 0; y--)
+        for (var y = rectHeight - 1; y >= 0; y--)
         {
-            for (var x = 0; x < texture.width; x++)
+            for (var x = 0; x < rectWidth; x++)
             {
-                if (((Color32)texture.GetPixel(x, y)).a != 0)
+                if (((Color32)texture.GetPixel(x + rectX, y + rectY)).a != 0)
                 {
                     maskData.top = y - YPivot;
                     goto OutTop;
@@ -427,11 +429,11 @@ public class PixelPerfectCollider : MonoBehaviour
         OutTop:
 
         // Get bbox left
-        for (var x = 0; x < texture.width; x++)
+        for (var x = 0; x < rectWidth; x++)
         {
-            for (var y = 0; y < texture.height; y++)
+            for (var y = 0; y < rectHeight; y++)
             {
-                if (((Color32)texture.GetPixel(x, y)).a != 0)
+                if (((Color32)texture.GetPixel(x + rectX, y + rectY)).a != 0)
                 {
                     maskData.left = x - XPivot;
                     goto OutLeft;
@@ -441,11 +443,11 @@ public class PixelPerfectCollider : MonoBehaviour
         OutLeft:
 
         // Get bbox right
-        for (var x = texture.width - 1; x >= 0; x--)
+        for (var x = rectWidth - 1; x >= 0; x--)
         {
-            for (var y = 0; y < texture.height; y++)
+            for (var y = 0; y < rectHeight; y++)
             {
-                if (((Color32)texture.GetPixel(x, y)).a != 0)
+                if (((Color32)texture.GetPixel(x + rectX, y + rectY)).a != 0)
                 {
                     maskData.right = x - XPivot;
                     goto OutRight;
@@ -455,8 +457,8 @@ public class PixelPerfectCollider : MonoBehaviour
         OutRight:
 
         // Other stuff
-        maskData.width = texture.width;
-        maskData.height = texture.height;
+        maskData.width = rectWidth;
+        maskData.height = rectHeight;
 
         return maskData;
     }
