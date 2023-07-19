@@ -18,6 +18,23 @@ public class PixelPerfectCollider : MonoBehaviour
 
     private bool[,] BoolData { get => maskData.boolData; }
 
+    private bool[,] ScaledBoolData
+    {
+        get
+        {
+            if (!enableChangeScale)
+            {
+                return scaledBoolDataStart;
+            }
+            else
+            {
+                return GetScaledBoolData(maskData.boolData, XScale, YScale);
+            }
+        }
+    }
+
+    private bool[,] scaledBoolDataStart;
+
     private int Width { get => maskData.width; }
     private int Height { get => maskData.height; }
 
@@ -81,8 +98,13 @@ public class PixelPerfectCollider : MonoBehaviour
     private Transform _transform;
 
     public bool enableSpriteAnimator = false;
+
+    // Check if the Scale may change from the start
     public bool enableChangeScale = false;
+
+    // Check if the Rotation may change from the start
     public bool enableChangeRotation = false;
+
     private SpriteAnimator animator;
 
     private void Start()
@@ -137,6 +159,8 @@ public class PixelPerfectCollider : MonoBehaviour
                 }
             }
         }
+
+        scaledBoolDataStart = GetScaledBoolData(BoolData, XScale, YScale);
 
         // Add to colliders
         if (gameObject.tag == null)
@@ -212,13 +236,13 @@ public class PixelPerfectCollider : MonoBehaviour
                 {
                     for (int xx = iLeft; xx <= iRight; xx++)
                     {
-                        var px1 = RoundToInt((xx - x1) / XScale + xo1);
-                        var py1 = RoundToInt((yy - y1) / YScale + yo1);
-                        var p1 = px1 >= 0 && py1 >= 0 && px1 < Width && py1 < Height && BoolData[px1, py1];
+                        var px1 = RoundToInt((xx - x1) + xo1 * XScale);
+                        var py1 = RoundToInt((yy - y1) + yo1 * YScale);
+                        var p1 = px1 >= 0 && py1 >= 0 && px1 < Width * XScale && py1 < Height * YScale && ScaledBoolData[px1, py1];
 
-                        var px2 = RoundToInt((xx - x2) / col.XScale + xo2);
-                        var py2 = RoundToInt((yy - y2) / col.YScale + yo2);
-                        var p2 = px2 >= 0 && py2 >= 0 && px2 < col.Width && py2 < col.Height && col.BoolData[px2, py2];
+                        var px2 = RoundToInt((xx - x2) + xo2 * col.XScale);
+                        var py2 = RoundToInt((yy - y2) + yo2 * col.YScale);
+                        var p2 = px2 >= 0 && py2 >= 0 && px2 < col.Width * col.XScale && py2 < col.Height * col.YScale && col.ScaledBoolData[px2, py2];
 
                         if (p1 && p2)
                         {
@@ -247,16 +271,16 @@ public class PixelPerfectCollider : MonoBehaviour
                         var lx1 = xx - x1;
                         var ly1 = yy - y1;
                         RotateAround(lx1, ly1, 0, 0, sina1, cosa1, out var lx1a, out var ly1a);
-                        var px1 = RoundToInt(lx1a / XScale + xo1);
-                        var py1 = RoundToInt(ly1a / YScale + yo1);
-                        var p1 = px1 >= 0 && py1 >= 0 && px1 < Width && py1 < Height && BoolData[px1, py1];
+                        var px1 = RoundToInt(lx1a + xo1 * XScale);
+                        var py1 = RoundToInt(ly1a + yo1 * YScale);
+                        var p1 = px1 >= 0 && py1 >= 0 && px1 < Width * XScale && py1 < Height * YScale && ScaledBoolData[px1, py1];
 
                         var lx2 = xx - x2;
                         var ly2 = yy - y2;
                         RotateAround(lx2, ly2, 0, 0, sina2, cosa2, out var lx2a, out var ly2a);
-                        var px2 = RoundToInt(lx2a / col.XScale + xo2);
-                        var py2 = RoundToInt(ly2a / col.YScale + yo2);
-                        var p2 = px2 >= 0 && py2 >= 0 && px2 < col.Width && py2 < col.Height && col.BoolData[px2, py2];
+                        var px2 = RoundToInt(lx2a + xo2 * col.XScale);
+                        var py2 = RoundToInt(ly2a + yo2 * col.YScale);
+                        var p2 = px2 >= 0 && py2 >= 0 && px2 < col.Width * col.XScale && py2 < col.Height * col.YScale && col.ScaledBoolData[px2, py2];
 
                         if (p1 && p2)
                             return col.gameObject;
@@ -265,6 +289,20 @@ public class PixelPerfectCollider : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public bool[,] GetScaledBoolData(bool[,] boolData, float xScale, float yScale)
+    {
+        bool[,] scaledBoolData = new bool[CeilToInt(boolData.GetLength(0) * xScale), CeilToInt(boolData.GetLength(1) * yScale)];
+
+        for (int xx = 0; xx < scaledBoolData.GetLength(0); xx++)
+        {
+            for (int yy = 0; yy < scaledBoolData.GetLength(1); yy++)
+            {
+                scaledBoolData[xx, yy] = boolData[FloorToInt(xx / xScale), FloorToInt(yy / yScale)];
+            }
+        }
+        return scaledBoolData;
     }
 
     public void MoveContactX(float maxX, string tag)
