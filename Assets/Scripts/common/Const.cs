@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,4 +9,10 @@ public enum Difficulty
     VeryHard = 2,
     Impossible = 3,
     LoadGame = 4,
+}
+
+public enum Gravity
+{
+    Down = 0,
+    Up = 1,
 }

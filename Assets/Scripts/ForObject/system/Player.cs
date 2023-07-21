@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     [ReadOnly] public float hspeed = 0;
     [ReadOnly] public float vspeed = 0;
     private float gravity = -0.4f;
+    [ReadOnly] public Gravity gravityDirection = Gravity.Down;
+    private Gravity gravityDirectionPrevious = Gravity.Down;
 
     public float X
     {
@@ -68,6 +70,7 @@ public class Player : MonoBehaviour
 
     public GameObject sprite;
     private SpriteAnimator animator;
+    private Transform spriteTransform;
 
     public World world;
     private PixelPerfectCollider pixCollider;
@@ -100,6 +103,7 @@ public class Player : MonoBehaviour
         _transform = transform;
         pixCollider = GetComponent<PixelPerfectCollider>();
         animator = sprite.GetComponent<SpriteAnimator>();
+        spriteTransform = sprite.transform;
         DontDestroyOnLoad(gameObject);
 
         if (World.instance.autosave)
@@ -111,6 +115,29 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (gravityDirection != gravityDirectionPrevious)
+        {
+            gravityDirectionPrevious = gravityDirection;
+            if (gravityDirection == Gravity.Down)
+            {
+                jump = -8.5f;
+                jump2 = -7;
+
+                gravity = -0.4f;
+                _transform.localScale = new Vector2(_transform.localScale.x, 1);
+                spriteTransform.localPosition = new Vector2(0, 0);
+            }
+            else if (gravityDirection == Gravity.Up)
+            {
+                jump = 8.5f;
+                jump2 = 7;
+
+                gravity = 0.4f;
+                _transform.localScale = new Vector2(_transform.localScale.x, -1);
+                spriteTransform.localPosition = new Vector2(0, -1);
+            }
+        }
+
         xprevious = X;
         yprevious = Y;
 
@@ -124,16 +151,24 @@ public class Player : MonoBehaviour
         else if (L)
             h = -1;
 
-        var notOnBlock = !pixCollider.PlaceMeeting(X, Y - 1, "Block");
+        bool notOnBlock = false;
+        if (gravityDirection == Gravity.Down)
+        {
+            notOnBlock = !pixCollider.PlaceMeeting(X, Y - 1, "Block");
+        }
+        else if (gravityDirection == Gravity.Up)
+        {
+            notOnBlock = !pixCollider.PlaceMeeting(X, Y + 1, "Block");
+        }
         var onVineL = pixCollider.PlaceMeeting(X - 1, Y, "WalljumpL") && notOnBlock;
         var onVineR = pixCollider.PlaceMeeting(X + 1, Y, "WalljumpR") && notOnBlock;
 
         if (h != 0)
         {
             if (h == -1)
-                sprite.transform.localScale = new Vector3(-1, 1);
+                spriteTransform.localScale = new Vector2(-1, spriteTransform.localScale.y);
             else if (h == 1)
-                sprite.transform.localScale = new Vector3(1, 1);
+                spriteTransform.localScale = new Vector2(1, spriteTransform.localScale.y);
 
             animator.currentAnimation = "Running";
             animator.imageSpeed = 0.5f;
@@ -145,22 +180,46 @@ public class Player : MonoBehaviour
         }
         hspeed = maxSpeed * h;
 
-        if (!onPlatform)
+        if (gravityDirection == Gravity.Down)
         {
-            if (vspeed > 0.05)
+            if (!onPlatform)
             {
-                animator.currentAnimation = "Jump";
+                if (vspeed > 0.05)
+                {
+                    animator.currentAnimation = "Jump";
+                }
+                else if (vspeed < -0.05)
+                {
+                    animator.currentAnimation = "Fall";
+                }
             }
-            else if (vspeed < -0.05)
+            else
             {
-                animator.currentAnimation = "Fall";
+                if (!pixCollider.PlaceMeeting(X, Y - 4, "Platform"))
+                {
+                    onPlatform = false;
+                }
             }
         }
-        else
+        else if (gravityDirection == Gravity.Up)
         {
-            if (!pixCollider.PlaceMeeting(X, Y - 4, "Platform"))
+            if (!onPlatform)
             {
-                onPlatform = false;
+                if (vspeed < -0.05)
+                {
+                    animator.currentAnimation = "Jump";
+                }
+                else if (vspeed > 0.05)
+                {
+                    animator.currentAnimation = "Fall";
+                }
+            }
+            else
+            {
+                if (!pixCollider.PlaceMeeting(X, Y + 4, "Platform"))
+                {
+                    onPlatform = false;
+                }
             }
         }
 
@@ -182,11 +241,17 @@ public class Player : MonoBehaviour
         if (onVineL || onVineR)
         {
             if (onVineR)
-                sprite.transform.localScale = new Vector3(-1, 1);
+                spriteTransform.localScale = new Vector2(-1, spriteTransform.localScale.y);
             else
-                sprite.transform.localScale = new Vector3(1, 1);
-
-            vspeed = -2;
+                spriteTransform.localScale = new Vector2(1, spriteTransform.localScale.y);
+            if (gravityDirection == Gravity.Down)
+            {
+                vspeed = -2;
+            }
+            else if (gravityDirection == Gravity.Up)
+            {
+                vspeed = 2;
+            }
             animator.currentAnimation = "Sliding";
             animator.imageSpeed = 0.5f;
 
@@ -199,7 +264,14 @@ public class Player : MonoBehaviour
                     else
                         hspeed = 15;
 
-                    vspeed = 9;
+                    if (gravityDirection == Gravity.Down)
+                    {
+                        vspeed = 9;
+                    }
+                    else if (gravityDirection == Gravity.Up)
+                    {
+                        vspeed = 9;
+                    }
 
                     walljumpSound.Play();
                     animator.currentAnimation = "Jump";
@@ -239,9 +311,19 @@ public class Player : MonoBehaviour
             {
                 pixCollider.MoveContactY(vspeed, "Block");
 
-                if (vspeed < 0)
+                if (gravityDirection == Gravity.Down)
                 {
-                    djump = true;
+                    if (vspeed < 0)
+                    {
+                        djump = true;
+                    }
+                }
+                else if (gravityDirection == Gravity.Up)
+                {
+                    if (vspeed > 0)
+                    {
+                        djump = true;
+                    }
                 }
                 vspeed = 0;
             }
@@ -294,31 +376,64 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if (pixCollider.PlaceMeeting(X, Y - 1, "Block") || pixCollider.PlaceMeeting(X, Y - 1, "Platform") || onPlatform
+        if (gravityDirection == Gravity.Down)
+        {
+            if (pixCollider.PlaceMeeting(X, Y - 1, "Block") || pixCollider.PlaceMeeting(X, Y - 1, "Platform") || onPlatform
             || pixCollider.PlaceMeeting(X, Y - 1, "Water"))
-        {
-            vspeed = -jump;
-            djump = true;
-            jumpSound.Play();
-        }
-        else if (djump || pixCollider.PlaceMeeting(X, Y - 1, "Water2"))
-        {
-            animator.currentAnimation = "Jump";
-            vspeed = -jump2;
-            djump = false;
-            djumpSound.Play();
-
-            if (!pixCollider.PlaceMeeting(X, Y - 1, "Water3"))
-                djump = false;
-            else
+            {
+                vspeed = -jump;
                 djump = true;
+                jumpSound.Play();
+            }
+            else if (djump || pixCollider.PlaceMeeting(X, Y - 1, "Water2"))
+            {
+                animator.currentAnimation = "Jump";
+                vspeed = -jump2;
+                djump = false;
+                djumpSound.Play();
+
+                if (!pixCollider.PlaceMeeting(X, Y - 1, "Water3"))
+                    djump = false;
+                else
+                    djump = true;
+            }
+        }
+        else if (gravityDirection == Gravity.Up)
+        {
+            if (pixCollider.PlaceMeeting(X, Y + 1, "Block") || pixCollider.PlaceMeeting(X, Y + 1, "Platform") || onPlatform
+            || pixCollider.PlaceMeeting(X, Y + 1, "Water"))
+            {
+                vspeed = -jump;
+                djump = true;
+                jumpSound.Play();
+            }
+            else if (djump || pixCollider.PlaceMeeting(X, Y + 1, "Water2"))
+            {
+                animator.currentAnimation = "Jump";
+                vspeed = -jump2;
+                djump = false;
+                djumpSound.Play();
+
+                if (!pixCollider.PlaceMeeting(X, Y + 1, "Water3"))
+                    djump = false;
+                else
+                    djump = true;
+            }
         }
     }
 
     private void VJump()
     {
-        if (vspeed > 0)
-            vspeed *= 0.45f;
+        if (gravityDirection == Gravity.Down)
+        {
+            if (vspeed > 0)
+                vspeed *= 0.45f;
+        }
+        else if (gravityDirection == Gravity.Up)
+        {
+            if (vspeed < 0)
+                vspeed *= 0.45f;
+        }
     }
 
     private void Shoot()

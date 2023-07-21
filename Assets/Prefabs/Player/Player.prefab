@@ -231,6 +231,7 @@ MonoBehaviour:
   djump: 1
   hspeed: 0
   vspeed: 0
+  gravityDirection: 0
   sprite: {fileID: 7940218150452588784}
   world: {fileID: 7254145588837832267, guid: 2a2d45928414c1e429b2adf664983a4c, type: 3}
   bloodEmitter: {fileID: 3852221451958636710, guid: fb3e764332f17b4469bd770c78c2a0f5, type: 3}
@@ -252,6 +253,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpriteAnimator: 0
+  enableChangeScale: 1
+  enableChangeRotation: 0
 --- !u!82 &9066045787296651755
 AudioSource:
   m_ObjectHideFlags: 0
