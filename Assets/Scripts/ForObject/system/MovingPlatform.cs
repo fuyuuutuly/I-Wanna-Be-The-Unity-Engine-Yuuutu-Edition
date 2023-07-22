@@ -44,15 +44,34 @@ public class MovingPlatform : MonoBehaviour
                 }
             }
 
-            var col = pixCollider.InstancePlace(transform.position.x, transform.position.y + 2, "Player");
-            if (col != null)
-            {
-                var p = col.GetComponent<Player>();
+            var player = GameObject.FindWithTag("Player")?.GetComponent<Player>();
 
-                p.Y += vspeed + yspeed;
-                if (!p.GetComponent<PixelPerfectCollider>().PlaceMeeting(p.transform.position.x + hspeed, p.transform.position.y, "Block"))
+            if (player?.gravityDirection == Gravity.Down)
+            {
+                var col = pixCollider.InstancePlace(transform.position.x, transform.position.y + 2, "Player");
+                if (col != null)
                 {
-                    p.X += hspeed;
+                    var p = col.GetComponent<Player>();
+
+                    p.Y += vspeed + yspeed;
+                    if (!p.GetComponent<PixelPerfectCollider>().PlaceMeeting(p.transform.position.x + hspeed, p.transform.position.y, "Block"))
+                    {
+                        p.X += hspeed;
+                    }
+                }
+            }
+            else if (player?.gravityDirection == Gravity.Up)
+            {
+                var col = pixCollider.InstancePlace(transform.position.x, transform.position.y - 2, "Player");
+                if (col != null)
+                {
+                    var p = col.GetComponent<Player>();
+
+                    p.Y += vspeed + yspeed;
+                    if (!p.GetComponent<PixelPerfectCollider>().PlaceMeeting(p.transform.position.x + hspeed, p.transform.position.y, "Block"))
+                    {
+                        p.X += hspeed;
+                    }
                 }
             }
 

@@ -251,7 +251,7 @@ public class Player : MonoBehaviour
                     }
                     else if (gravityDirection == Gravity.Up)
                     {
-                        vspeed = 9;
+                        vspeed = -9;
                     }
 
                     walljumpSound.Play();
@@ -327,16 +327,33 @@ public class Player : MonoBehaviour
         var platform = pixCollider.InstancePlace(X, Y, "Platform");
         if (platform != null)
         {
-            if (Y - vspeed / 2 >= platform.transform.position.y)
+            if (gravityDirection == Gravity.Down)
             {
-                var vsp = platform.GetComponent<MovingPlatform>().vspeed;
-                if (vsp <= 0)
+                if (Y - vspeed / 2 >= platform.transform.position.y)
                 {
-                    Y = platform.transform.position.y + 9;
-                    vspeed = vsp;
+                    var vsp = platform.GetComponent<MovingPlatform>().vspeed;
+                    if (vsp <= 0)
+                    {
+                        Y = platform.transform.position.y + 9;
+                        vspeed = vsp;
+                    }
+                    onPlatform = true;
+                    djump = true;
                 }
-                onPlatform = true;
-                djump = true;
+            }
+            else if (gravityDirection == Gravity.Up)
+            {
+                if (Y - vspeed / 2 <= platform.transform.position.y - 16)
+                {
+                    var vsp = platform.GetComponent<MovingPlatform>().vspeed;
+                    if (vsp <= 0)
+                    {
+                        Y = platform.transform.position.y - 16 - 9;
+                        vspeed = vsp;
+                    }
+                    onPlatform = true;
+                    djump = true;
+                }
             }
         }
 
