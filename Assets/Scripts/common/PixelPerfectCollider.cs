@@ -28,12 +28,23 @@ public class PixelPerfectCollider : MonoBehaviour
             }
             else
             {
-                return GetScaledBoolData(maskData.boolData, XScale, YScale);
+                if (XScale != xScalePrevious || YScale != yScalePrevious)
+                {
+                    xScalePrevious = XScale;
+                    yScalePrevious = YScale;
+                    scaledBoolDataPrevious = GetScaledBoolData(maskData.boolData, XScale, YScale);
+                    return scaledBoolDataPrevious;
+                }
+                else
+                {
+                    return scaledBoolDataPrevious;
+                }
             }
         }
     }
 
     private bool[,] scaledBoolDataStart;
+    private bool[,] scaledBoolDataPrevious;
 
     private int Width { get => maskData.width; }
     private int Height { get => maskData.height; }
@@ -60,6 +71,7 @@ public class PixelPerfectCollider : MonoBehaviour
     }
 
     private float xScaleStart;
+    private float xScalePrevious;
 
     private float YScale
     {
@@ -77,6 +89,7 @@ public class PixelPerfectCollider : MonoBehaviour
     }
 
     private float yScaleStart;
+    private float yScalePrevious;
 
     private float Rotation
     {
