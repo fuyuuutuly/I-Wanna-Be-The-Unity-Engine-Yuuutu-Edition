@@ -19,7 +19,6 @@ public class World : Singleton<World>
 
     [ReadOnly] public int death = 0;
     [ReadOnly] public int time = 0;
-    [ReadOnly] public int grav = 1;
 
     [ReadOnly] public bool gameStarted = false;
     [ReadOnly] public bool autosave = false;
@@ -27,7 +26,7 @@ public class World : Singleton<World>
     [ReadOnly] public string savedScene;
     [ReadOnly] public float savedPlayerX;
     [ReadOnly] public float savedPlayerY;
-    [ReadOnly] public int savedGrav;
+    [ReadOnly] public Gravity savedGrav;
 
     public Player playerPrefab;
     public GAMEOVER gameoverPrefab;
@@ -168,7 +167,6 @@ public class World : Singleton<World>
         }
         gameStarted = true;
         autosave = false;
-        grav = savedGrav;
 
         foreach (var p in FindObjectsOfType<Player>())
         {
@@ -177,6 +175,7 @@ public class World : Singleton<World>
 
         var player = Instantiate(playerPrefab);
         player.gameObject.transform.position = new Vector3(savedPlayerX, savedPlayerY);
+        player.gravityDirection = savedGrav;
 
         deathMusic.Stop();
         deathSound.Stop();
@@ -194,7 +193,7 @@ public class World : Singleton<World>
                 savedScene = SceneManager.GetActiveScene().name;
                 savedPlayerX = player.transform.position.x;
                 savedPlayerY = player.transform.position.y;
-                savedGrav = grav;
+                savedGrav = player.GetComponent<Player>().gravityDirection;
             }
         }
 

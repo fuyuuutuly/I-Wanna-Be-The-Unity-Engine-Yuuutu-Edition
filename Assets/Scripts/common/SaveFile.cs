@@ -1,7 +1,7 @@
 ﻿using System;
 
 [Serializable]
-class SaveFile
+internal class SaveFile
 {
     public Difficulty difficulty;
     public int death;
@@ -9,7 +9,7 @@ class SaveFile
 
     public float playerX;
     public float playerY;
-    public int playerGrav;
+    public Gravity playerGrav;
 
     public string scene;
 }

@@ -111,32 +111,13 @@ public class Player : MonoBehaviour
             World.instance.SaveGame(true);
             World.instance.autosave = false;
         }
+
+        CheckGravity();
     }
 
     private void Update()
     {
-        if (gravityDirection != gravityDirectionPrevious)
-        {
-            gravityDirectionPrevious = gravityDirection;
-            if (gravityDirection == Gravity.Down)
-            {
-                jump = -8.5f;
-                jump2 = -7;
-
-                gravity = -0.4f;
-                _transform.localScale = new Vector2(_transform.localScale.x, 1);
-                spriteTransform.localPosition = new Vector2(0, 0);
-            }
-            else if (gravityDirection == Gravity.Up)
-            {
-                jump = 8.5f;
-                jump2 = 7;
-
-                gravity = 0.4f;
-                _transform.localScale = new Vector2(_transform.localScale.x, -1);
-                spriteTransform.localPosition = new Vector2(0, -1);
-            }
-        }
+        CheckGravity();
 
         xprevious = X;
         yprevious = Y;
@@ -459,6 +440,32 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+    public void CheckGravity()
+    {
+        if (gravityDirection != gravityDirectionPrevious)
+        {
+            gravityDirectionPrevious = gravityDirection;
+            if (gravityDirection == Gravity.Down)
+            {
+                jump = -8.5f;
+                jump2 = -7;
+
+                gravity = -0.4f;
+                _transform.localScale = new Vector2(_transform.localScale.x, 1);
+                spriteTransform.localPosition = new Vector2(0, 0);
+            }
+            else if (gravityDirection == Gravity.Up)
+            {
+                jump = 8.5f;
+                jump2 = 7;
+
+                gravity = 0.4f;
+                _transform.localScale = new Vector2(_transform.localScale.x, -1);
+                spriteTransform.localPosition = new Vector2(0, -1);
+            }
         }
     }
 }
