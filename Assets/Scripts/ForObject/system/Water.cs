@@ -20,9 +20,16 @@ public class Water : MonoBehaviour
             var player = col.GetComponent<Player>();
             if (refreshDoubleJump)
                 player.djump = true;
-
-            if (player.vspeed < -2)
-                player.vspeed = -2;
+            if (player.gravityDirection == Gravity.Down)
+            {
+                if (player.vspeed < -2)
+                    player.vspeed = -2;
+            }
+            else if (player.gravityDirection == Gravity.Up)
+            {
+                if (player.vspeed > 2)
+                    player.vspeed = 2;
+            }
         }
     }
 }
