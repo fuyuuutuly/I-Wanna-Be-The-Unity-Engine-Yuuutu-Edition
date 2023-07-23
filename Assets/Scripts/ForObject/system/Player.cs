@@ -345,11 +345,11 @@ public class Player : MonoBehaviour
             {
                 if (Y - vspeed / 2 <= platform.transform.position.y - 16)
                 {
-                    var vsp = platform.GetComponent<MovingPlatform>().vspeed;
-                    if (vsp <= 0)
+                    var ysp = platform.GetComponent<MovingPlatform>().yspeed;
+                    if (ysp >= 0)
                     {
                         Y = platform.transform.position.y - 16 - 9;
-                        vspeed = vsp;
+                        vspeed = ysp;
                     }
                     onPlatform = true;
                     djump = true;
