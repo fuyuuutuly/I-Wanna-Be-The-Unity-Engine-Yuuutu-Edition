@@ -10,9 +10,12 @@ public class JumpRefresher : MonoBehaviour
     private int mode = 0;
     private float yStart;
 
+    private new ParticleSystem particleSystem;
+
     private void Start()
     {
         yStart = transform.position.y;
+        particleSystem = GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -47,6 +50,9 @@ public class JumpRefresher : MonoBehaviour
             {
                 player.GetComponent<Player>().djump = true;
                 GetComponent<SpriteRenderer>().enabled = false;
+                var e = particleSystem.emission;
+                e.enabled = false;
+
                 timer = refreshTime;
             }
         }
@@ -56,6 +62,8 @@ public class JumpRefresher : MonoBehaviour
             {
                 timer = -1;
                 GetComponent<SpriteRenderer>().enabled = true;
+                var e = particleSystem.emission;
+                e.enabled = true;
             }
         }
     }
